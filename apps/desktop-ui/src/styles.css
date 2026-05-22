@@ -528,3 +528,39 @@ button {
   font-size: 12px;
   overflow-wrap: anywhere;
 }
+
+.settings-panel,
+.settings-panel section {
+  display: grid;
+  gap: 8px;
+}
+
+.settings-row,
+.settings-toggle {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.settings-panel label {
+  color: #89939d;
+  display: grid;
+  font-size: 12px;
+  gap: 5px;
+}
+
+.settings-panel select {
+  background: #15191d;
+  border: 1px solid #2d3338;
+  border-radius: 6px;
+  color: #f1f4f6;
+  max-width: 100%;
+  padding: 6px 8px;
+}
+
+.settings-panel strong,
+.settings-panel span {
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}

@@ -757,7 +757,7 @@ docs                      architecture, security, setup, release notes
 #### T1101 - Add Desktop Settings UI
 
 - Version: `v0.11.0`
-- Status: `pending`
+- Status: `completed`
 - Goal: Add settings for account, projects, permissions, telemetry, updates, and diagnostics.
 - Persona: Desktop UX engineer; make controls discoverable.
 - Success Criteria: Settings UI reads/writes typed local and cloud-backed settings.

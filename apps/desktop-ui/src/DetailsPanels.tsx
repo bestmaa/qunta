@@ -10,6 +10,7 @@ import {
 } from "./desktop-commands.js";
 import { GitCheckpointView } from "./GitCheckpointView.js";
 import { mockTerminalGroups } from "./mock-data.js";
+import { SettingsPanel } from "./SettingsPanel.js";
 import { TerminalLogPanel } from "./TerminalLogPanel.js";
 import { VerificationCommands } from "./VerificationCommands.js";
 
@@ -118,6 +119,9 @@ export function DetailsPanels({ project, workspaceSummary }: DetailsPanelsProps)
       </Panel>
       <Panel heading="Verification">
         <VerificationCommands commands={workspaceSummary?.testCommands ?? []} cwd={project?.path} />
+      </Panel>
+      <Panel heading="Settings">
+        <SettingsPanel project={project} />
       </Panel>
     </div>
   );

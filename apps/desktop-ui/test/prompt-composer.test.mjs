@@ -11,6 +11,7 @@ const terminal = readFileSync(join(here, "../src/TerminalLogPanel.tsx"), "utf8")
 const runner = readFileSync(join(here, "../src/useMockRunner.ts"), "utf8");
 const verification = readFileSync(join(here, "../src/VerificationCommands.tsx"), "utf8");
 const gitCheckpoint = readFileSync(join(here, "../src/GitCheckpointView.tsx"), "utf8");
+const settings = readFileSync(join(here, "../src/SettingsPanel.tsx"), "utf8");
 
 if (!source.includes("canSubmitPrompt")) {
   throw new Error("Prompt composer must export validation logic.");
@@ -58,4 +59,14 @@ for (const token of ["Mark Checkpoint", "changedFiles", "branch"]) {
   if (!gitCheckpoint.includes(token)) {
     throw new Error(`Git checkpoint view is missing ${token}.`);
   }
+}
+
+for (const token of ["localStorage", "Telemetry", "Reset Trusted Commands", "confirmDanger"]) {
+  if (!settings.includes(token)) {
+    throw new Error(`Settings panel is missing ${token}.`);
+  }
+}
+
+if (/openai|deepseek|provider/i.test(settings)) {
+  throw new Error("Settings panel must not expose provider internals.");
 }
