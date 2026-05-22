@@ -409,7 +409,7 @@ docs                      architecture, security, setup, release notes
 #### T0601 - Define Codex Runtime Contract
 
 - Version: `v0.6.0`
-- Status: `pending`
+- Status: `completed`
 - Goal: Define how the desktop app launches, configures, streams, and stops Codex sessions.
 - Persona: Agent runtime architect; make Codex controllable and observable.
 - Success Criteria: Contract defines session inputs, workspace path, gateway endpoint, approval mode, events, cancellation, and output artifacts.
