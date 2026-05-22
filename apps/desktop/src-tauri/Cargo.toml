@@ -1,0 +1,24 @@
+[package]
+name = "qunta-desktop"
+edition.workspace = true
+license.workspace = true
+version.workspace = true
+
+[build-dependencies]
+tauri-build = { version = "2.5.1", features = [] }
+
+[dependencies]
+desktop-core = { path = "../../../crates/desktop-core" }
+serde = { version = "1.0.228", features = ["derive"] }
+tauri = { version = "2.9.5", features = [] }
+
+[lib]
+name = "qunta_desktop"
+path = "src/lib.rs"
+
+[[bin]]
+name = "qunta-desktop"
+path = "src/main.rs"
+
+[lints]
+workspace = true

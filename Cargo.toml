@@ -1,0 +1,20 @@
+[workspace]
+members = [
+  "apps/desktop/src-tauri",
+  "crates/agent-runner",
+  "crates/desktop-core",
+  "crates/sandbox",
+  "crates/workspace-check",
+]
+resolver = "2"
+
+[workspace.package]
+edition = "2021"
+license = "UNLICENSED"
+version = "0.1.0"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+unwrap_used = "deny"

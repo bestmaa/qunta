@@ -1,0 +1,20 @@
+{
+  "name": "@qunta/ui",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Reusable UI primitives for Qunta.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "node test/public-api.test.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "react": "^19.2.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.8"
+  }
+}

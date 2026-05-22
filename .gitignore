@@ -1,0 +1,16 @@
+node_modules/
+target/
+dist/
+build/
+.turbo/
+.vite/
+coverage/
+*.log
+.env
+.env.*
+!.env.example
+*.db
+*.sqlite
+*.sqlite3
+*.tsbuildinfo
+apps/desktop/src-tauri/gen/
