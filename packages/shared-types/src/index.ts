@@ -1,5 +1,6 @@
 export type * from "./account.type.js";
 export type * from "./auth.type.js";
+export type * from "./billing.type.js";
 export type * from "./cloud-api.type.js";
 export type * from "./error.type.js";
 export type * from "./gateway.type.js";

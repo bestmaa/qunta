@@ -729,7 +729,7 @@ docs                      architecture, security, setup, release notes
 #### T1003 - Add Billing Provider Contract
 
 - Version: `v0.10.2`
-- Status: `pending`
+- Status: `completed`
 - Goal: Define payment provider integration for plans, invoices, trials, and cancellations.
 - Persona: SaaS product engineer; keep billing provider replaceable.
 - Success Criteria: Contract supports free trial, paid plans, usage limits, and account status.
