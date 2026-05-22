@@ -582,7 +582,7 @@ docs                      architecture, security, setup, release notes
 #### T0804 - Build Event Stream Timeline
 
 - Version: `v0.8.3`
-- Status: `pending`
+- Status: `completed`
 - Goal: Show agent events such as thinking summary, file read, command request, command output, patch, test result, and completion.
 - Persona: Frontend engineer; make agent work observable.
 - Success Criteria: Timeline renders typed events, groups noisy logs, and handles streaming updates.

@@ -8,9 +8,16 @@ import {
   scanWorkspace,
   validateProjectPath
 } from "./desktop-commands.js";
+import { AgentTimeline, type AgentTimelineEvent } from "./AgentTimeline.js";
 import { PromptComposer } from "./PromptComposer.js";
 
 const recentProjectsKey = "qunta.recentProjects";
+const mockEvents: readonly AgentTimelineEvent[] = [
+  { id: "evt-1", title: "Prepared project context", type: "thinking" },
+  { id: "evt-2", title: "Read package metadata", type: "file_read", detail: "package.json" },
+  { id: "evt-3", title: "Requested verification command", type: "command_request", detail: "pnpm test" },
+  { id: "evt-4", title: "Verification ready", type: "test_result", detail: "No command has run yet." }
+];
 
 type ApprovalState = "approved" | "pending" | "rejected";
 
@@ -91,6 +98,7 @@ export function App() {
           </Panel>
           <div className="session-surface">
             <div className="session-placeholder">{composerStatus}</div>
+            <AgentTimeline events={mockEvents} />
             <PromptComposer
               disabled={!activeProject}
               onCancel={() => setComposerStatus("Session cancelled")}
