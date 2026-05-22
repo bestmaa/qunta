@@ -850,7 +850,7 @@ docs                      architecture, security, setup, release notes
 #### T1205 - Prepare Private Beta Release
 
 - Version: `v0.12.4`
-- Status: `pending`
+- Status: `completed`
 - Goal: Prepare the first private beta build.
 - Persona: Release manager; ship only verified product.
 - Success Criteria: Full checks pass, installable artifact exists, release notes exist, known limitations are documented, and provider routing is server-side.

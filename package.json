@@ -11,7 +11,8 @@
     "test": "node tools/check-task-queue.mjs && corepack pnpm --filter @qunta/shared-types test && corepack pnpm --filter @qunta/ui test && corepack pnpm --filter @qunta/desktop-ui test && corepack pnpm --filter @qunta/api test && corepack pnpm --filter @qunta/llm-gateway test && corepack pnpm test:e2e",
     "test:e2e": "node tests/e2e/mvp-smoke.mjs",
     "check": "corepack pnpm lint && corepack pnpm typecheck && corepack pnpm test",
-    "package:desktop:smoke": "node tools/package-desktop.mjs"
+    "package:desktop:smoke": "node tools/package-desktop.mjs",
+    "release:beta:check": "node tools/prepare-beta.mjs"
   },
   "engines": {
     "node": ">=22.0.0",
