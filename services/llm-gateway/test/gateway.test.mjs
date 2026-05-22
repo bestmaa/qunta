@@ -8,6 +8,10 @@ const openAiSource = readFileSync(
   new URL("../src/providers/openai-adapter.ts", import.meta.url),
   "utf8"
 );
+const deepSeekSource = readFileSync(
+  new URL("../src/providers/deepseek-adapter.ts", import.meta.url),
+  "utf8"
+);
 
 if (!configSource.includes("QUNTA_GATEWAY_PORT must be a valid TCP port")) {
   throw new Error("gateway config validation is missing");
@@ -31,4 +35,12 @@ if (!openAiSource.includes("authorization: `Bearer ${apiKey}`")) {
 
 if (!openAiSource.includes("mapOpenAiUsage")) {
   throw new Error("OpenAI adapter usage mapping is missing");
+}
+
+if (!deepSeekSource.includes("mapDeepSeekUsage")) {
+  throw new Error("DeepSeek adapter usage mapping is missing");
+}
+
+if (deepSeekSource.includes("console.")) {
+  throw new Error("DeepSeek adapter must not log provider details");
 }

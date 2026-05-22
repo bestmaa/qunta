@@ -381,7 +381,7 @@ docs                      architecture, security, setup, release notes
 #### T0505 - Add DeepSeek Provider Adapter
 
 - Version: `v0.5.4`
-- Status: `pending`
+- Status: `completed`
 - Goal: Add server-side DeepSeek adapter for the LLM gateway.
 - Persona: Provider engineer; make low-cost routing possible.
 - Success Criteria: Adapter streams responses, maps errors, records usage, and follows provider-specific rate limit handling.
