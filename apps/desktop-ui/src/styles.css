@@ -99,6 +99,34 @@ button {
   font-size: 14px;
 }
 
+.activity-shell {
+  display: grid;
+  gap: 12px;
+  min-height: calc(100vh - 24px);
+  grid-template-rows: auto auto 1fr auto;
+}
+
+.project-header {
+  align-items: center;
+  border-bottom: 1px solid #2d3338;
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  padding-bottom: 12px;
+}
+
+.project-header h1 {
+  font-size: 18px;
+  margin: 0 0 4px;
+}
+
+.project-header p {
+  color: #89939d;
+  font-size: 12px;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
 .status-stack,
 .project-summary,
 .project-list,
@@ -149,10 +177,57 @@ button {
   overflow-wrap: anywhere;
 }
 
+.loading-state,
+.session-placeholder,
+.error-strip,
+.status-bar {
+  color: #89939d;
+  font-size: 13px;
+}
+
+.session-surface {
+  border: 1px solid #2d3338;
+  border-radius: 6px;
+  display: grid;
+  gap: 10px;
+  grid-template-rows: 1fr auto;
+  min-height: 280px;
+  padding: 12px;
+}
+
+.session-placeholder {
+  align-content: center;
+  display: grid;
+  justify-content: center;
+}
+
+.error-strip,
+.status-bar {
+  border-top: 1px solid #2d3338;
+  padding-top: 10px;
+}
+
+.status-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
 .error-text {
   color: #ff8a8a;
   font-size: 13px;
   overflow-wrap: anywhere;
+}
+
+@media (max-width: 1080px) {
+  .ca-workspace {
+    grid-template-columns: 220px minmax(0, 1fr);
+  }
+
+  .ca-workspace-details {
+    grid-column: 1 / -1;
+    border-width: 1px 0 0;
+  }
 }
 
 .approval-card {

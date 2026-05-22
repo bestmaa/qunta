@@ -556,7 +556,7 @@ docs                      architecture, security, setup, release notes
 #### T0802 - Build App Shell Layout
 
 - Version: `v0.8.1`
-- Status: `pending`
+- Status: `completed`
 - Goal: Build the main desktop layout with sidebar, project header, session area, and status bar.
 - Persona: Frontend engineer; create the reusable UI frame.
 - Success Criteria: Responsive desktop layout works at common window sizes and has empty/loading/error states.

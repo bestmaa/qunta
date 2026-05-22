@@ -56,29 +56,47 @@ export function App() {
   return (
     <WorkspaceLayout
       activity={
-        <Panel
-          actions={<Button tone="primary">New Session</Button>}
-          heading={activeProject ? activeProject.name : "Agent Session"}
-        >
-          {activeProject ? (
-            <div className="project-summary">
-              <div className="project-path">{activeProject.path}</div>
-              <StatusBadge tone={activeProject.isGitRepository ? "success" : "neutral"}>
-                {activeProject.isGitRepository ? "Git workspace" : "Folder workspace"}
-              </StatusBadge>
-              {workspaceSummary ? (
-                <div className="summary-grid">
-                  <SummaryRow label="Languages" values={workspaceSummary.languages} />
-                  <SummaryRow label="Managers" values={workspaceSummary.packageManagers} />
-                  <SummaryRow label="Tests" values={workspaceSummary.testCommands} />
-                  <SummaryRow label="Git" values={[workspaceSummary.gitState]} />
-                </div>
-              ) : null}
+        <div className="activity-shell">
+          <header className="project-header">
+            <div>
+              <h1>{activeProject ? activeProject.name : "No project selected"}</h1>
+              <p>{activeProject?.path ?? "Open a local folder to prepare a coding session."}</p>
             </div>
-          ) : (
-            <div className="empty-state">Select a project to start a coding session.</div>
-          )}
-        </Panel>
+            <Button disabled={!activeProject} tone="primary">
+              New Session
+            </Button>
+          </header>
+          <Panel heading="Session">
+            {activeProject ? (
+              <div className="project-summary">
+                <StatusBadge tone={activeProject.isGitRepository ? "success" : "neutral"}>
+                  {activeProject.isGitRepository ? "Git workspace" : "Folder workspace"}
+                </StatusBadge>
+                {workspaceSummary ? (
+                  <div className="summary-grid">
+                    <SummaryRow label="Languages" values={workspaceSummary.languages} />
+                    <SummaryRow label="Managers" values={workspaceSummary.packageManagers} />
+                    <SummaryRow label="Tests" values={workspaceSummary.testCommands} />
+                    <SummaryRow label="Git" values={[workspaceSummary.gitState]} />
+                  </div>
+                ) : (
+                  <div className="loading-state">Scanning workspace...</div>
+                )}
+              </div>
+            ) : (
+              <div className="empty-state">Select a project to start a coding session.</div>
+            )}
+          </Panel>
+          <div className="session-surface">
+            <div className="session-placeholder">Timeline, diff viewer, and composer will live here.</div>
+            <div className="error-strip">No active runtime errors.</div>
+          </div>
+          <footer className="status-bar">
+            <span>Profile: Suggest</span>
+            <span>Gateway: ready</span>
+            <span>Sidecar: diagnostics pending</span>
+          </footer>
+        </div>
       }
       details={
         <div className="details-stack">
