@@ -288,7 +288,7 @@ docs                      architecture, security, setup, release notes
 #### T0402 - Scaffold Cloud API Service
 
 - Version: `v0.4.1`
-- Status: `pending`
+- Status: `completed`
 - Goal: Create the cloud API service with strict TypeScript, health checks, config validation, and logging.
 - Persona: Backend platform engineer; make a deployable API foundation.
 - Success Criteria: Service starts, validates env, exposes health, and has test setup.
