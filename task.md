@@ -703,7 +703,7 @@ docs                      architecture, security, setup, release notes
 #### T1001 - Add Usage Metering
 
 - Version: `v0.10.0`
-- Status: `pending`
+- Status: `completed`
 - Goal: Record token usage, session count, provider cost, latency, and error metadata server-side.
 - Persona: Billing infrastructure engineer; make the product sellable.
 - Success Criteria: Gateway records normalized usage per account/session without exposing provider details to desktop.

@@ -13,6 +13,8 @@ const deepSeekSource = readFileSync(
   "utf8"
 );
 const routingSource = readFileSync(new URL("../src/routing-policy.ts", import.meta.url), "utf8");
+const usageSource = readFileSync(new URL("../src/usage-meter.ts", import.meta.url), "utf8");
+const serverSource = readFileSync(new URL("../src/server.ts", import.meta.url), "utf8");
 
 if (!configSource.includes("QUNTA_GATEWAY_PORT must be a valid TCP port")) {
   throw new Error("gateway config validation is missing");
@@ -52,4 +54,14 @@ if (!routingSource.includes("chooseProvider")) {
 
 if (routingSource.includes("desktopProvider")) {
   throw new Error("desktop must not choose providers");
+}
+
+for (const token of ["createUsageRepository", "providerRatesPerTokenMicros", "summarizeAccount"]) {
+  if (!usageSource.includes(token)) {
+    throw new Error(`usage metering is missing ${token}.`);
+  }
+}
+
+if (!serverSource.includes("/v1/usage") || serverSource.includes("desktopUsage")) {
+  throw new Error("gateway must expose server-side usage without trusting desktop usage.");
 }

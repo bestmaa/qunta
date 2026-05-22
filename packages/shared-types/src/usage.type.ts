@@ -11,6 +11,7 @@ export interface UsageRecord {
   readonly accountId: AccountId;
   readonly auditId: string;
   readonly createdAt: string;
+  readonly errorCode?: string;
   readonly estimatedCostMicros: number;
   readonly latencyMs: number;
   readonly sessionId: SessionId;

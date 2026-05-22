@@ -2,8 +2,12 @@ import type { GatewayChunk, UsageSummary } from "@qunta/shared-types";
 
 import type { GatewayConfig } from "./config.js";
 
-export function createMockStream(config: GatewayConfig, accountId: string): readonly GatewayChunk[] {
-  const auditId = `audit_${accountId}_${config.nodeEnv}`;
+export function createMockStream(
+  config: GatewayConfig,
+  accountId: string,
+  sessionId: string
+): readonly GatewayChunk[] {
+  const auditId = `audit_${accountId}_${sessionId}_${config.nodeEnv}`;
 
   return [
     {
@@ -16,16 +20,16 @@ export function createMockStream(config: GatewayConfig, accountId: string): read
       auditId,
       done: true,
       type: "done",
-      usage: emptyUsage()
+      usage: mockUsage()
     }
   ];
 }
 
-function emptyUsage(): UsageSummary {
+function mockUsage(): UsageSummary {
   return {
-    cachedInputTokens: 0,
-    inputTokens: 0,
-    outputTokens: 0,
-    totalTokens: 0
+    cachedInputTokens: 4,
+    inputTokens: 32,
+    outputTokens: 18,
+    totalTokens: 50
   };
 }

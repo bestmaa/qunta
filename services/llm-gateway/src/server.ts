@@ -1,10 +1,18 @@
 import { createServer as createHttpServer } from "node:http";
+import type { IncomingMessage, ServerResponse } from "node:http";
 
 import { authenticateGatewayRequest } from "./auth.js";
 import type { GatewayConfig } from "./config.js";
 import { createMockStream } from "./stream.js";
+import { createUsageRepository, type UsageRepository } from "./usage-meter.js";
 
-export function createGatewayServer(config: GatewayConfig) {
+export interface GatewayServerOptions {
+  readonly usageRepository?: UsageRepository;
+}
+
+export function createGatewayServer(config: GatewayConfig, options: GatewayServerOptions = {}) {
+  const usageRepository = options.usageRepository ?? createUsageRepository();
+
   return createHttpServer((request, response) => {
     if (request.method === "GET" && request.url === "/health") {
       writeJson(response, 200, { name: "qunta-llm-gateway", ok: true });
@@ -12,22 +20,79 @@ export function createGatewayServer(config: GatewayConfig) {
     }
 
     if (request.method === "POST" && request.url === "/v1/responses") {
-      const auth = authenticateGatewayRequest(request);
-      if (!auth) {
-        writeJson(response, 401, authRequired());
-        return;
-      }
+      void handleResponses(config, usageRepository, request, response);
+      return;
+    }
 
-      response.setHeader("content-type", "application/x-ndjson");
-      for (const chunk of createMockStream(config, auth.accountId)) {
-        response.write(`${JSON.stringify(chunk)}\n`);
-      }
-      response.end();
+    if (request.method === "GET" && request.url === "/v1/usage") {
+      const auth = authenticateGatewayRequest(request);
+      if (!auth) return writeJson(response, 401, authRequired());
+
+      writeJson(response, 200, {
+        ok: true,
+        records: usageRepository.listForAccount(auth.accountId),
+        summary: usageRepository.summarizeAccount(auth.accountId)
+      });
       return;
     }
 
     writeJson(response, 404, { error: { code: "not_found", message: "Route not found" }, ok: false });
   });
+}
+
+async function handleResponses(
+  config: GatewayConfig,
+  usageRepository: UsageRepository,
+  request: IncomingMessage,
+  response: ServerResponse
+) {
+  const auth = authenticateGatewayRequest(request);
+  if (!auth) {
+    writeJson(response, 401, authRequired());
+    return;
+  }
+
+  const startedAt = Date.now();
+  const body = await readJsonBody(request);
+  const sessionId = body.agentSessionId;
+  const chunks = createMockStream(config, auth.accountId, sessionId);
+
+  response.setHeader("content-type", "application/x-ndjson");
+  for (const chunk of chunks) {
+    response.write(`${JSON.stringify(chunk)}\n`);
+  }
+  response.end();
+
+  const finalChunk = chunks.find((chunk) => chunk.done);
+  if (finalChunk?.usage) {
+    usageRepository.record({
+      accountId: auth.accountId,
+      auditId: finalChunk.auditId,
+      endedAt: Date.now(),
+      providerId: "mock",
+      sessionId,
+      startedAt,
+      usage: finalChunk.usage
+    });
+  }
+}
+
+async function readJsonBody(request: IncomingMessage): Promise<{ agentSessionId: string }> {
+  const chunks: Buffer[] = [];
+  for await (const chunk of request) {
+    chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+  }
+
+  const parsed = JSON.parse(Buffer.concat(chunks).toString("utf8")) as {
+    readonly agentSessionId?: unknown;
+  };
+
+  return {
+    agentSessionId:
+      typeof parsed.agentSessionId === "string" && parsed.agentSessionId.trim()
+        ? parsed.agentSessionId
+        : "session_unknown"
+  };
 }
 
 function authRequired() {
