@@ -422,7 +422,7 @@ docs                      architecture, security, setup, release notes
 #### T0602 - Add Agent Runner Process Model
 
 - Version: `v0.6.1`
-- Status: `pending`
+- Status: `completed`
 - Goal: Implement the Rust process model for starting and stopping a controlled agent runner.
 - Persona: Systems engineer; avoid orphan processes and hidden commands.
 - Success Criteria: Runner can spawn a mock agent, stream stdout/stderr/events, cancel safely, and return exit status.

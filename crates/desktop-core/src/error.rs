@@ -44,6 +44,13 @@ impl DesktopError {
         }
     }
 
+    pub fn process_failed(message: impl Into<String>) -> Self {
+        Self {
+            kind: DesktopErrorKind::ProcessFailed,
+            message: message.into(),
+        }
+    }
+
     pub fn kind(&self) -> &DesktopErrorKind {
         &self.kind
     }

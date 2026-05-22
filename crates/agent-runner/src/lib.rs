@@ -1,3 +1,5 @@
+pub mod process;
+
 use desktop_core::{DesktopError, DesktopResult};
 
 #[derive(Debug, Clone, Eq, PartialEq)]
