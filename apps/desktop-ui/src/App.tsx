@@ -10,17 +10,14 @@ import {
   validateProjectPath
 } from "./desktop-commands.js";
 import { AgentTimeline } from "./AgentTimeline.js";
+import { DetailsPanels } from "./DetailsPanels.js";
 import { DiffViewer } from "./DiffViewer.js";
 import { FileTree } from "./FileTree.js";
-import { mockDiffs, mockEvents, mockFiles, mockTerminalGroups } from "./mock-data.js";
+import { mockDiffs, mockEvents, mockFiles } from "./mock-data.js";
 import { PromptComposer } from "./PromptComposer.js";
-import { TerminalLogPanel } from "./TerminalLogPanel.js";
 import { useMockRunner } from "./useMockRunner.js";
-import { VerificationCommands } from "./VerificationCommands.js";
 
 const recentProjectsKey = "qunta.recentProjects";
-
-type ApprovalState = "approved" | "pending" | "rejected";
 
 export function App() {
   const [activeProject, setActiveProject] = useState<DesktopProjectMetadata | null>(null);
@@ -28,8 +25,6 @@ export function App() {
   const [recentProjects, setRecentProjects] = useState<readonly DesktopProjectMetadata[]>([]);
   const [pickerError, setPickerError] = useState<string | null>(null);
   const [isPicking, setIsPicking] = useState(false);
-  const [approvalState, setApprovalState] = useState<ApprovalState>("pending");
-  const [approvalAudit, setApprovalAudit] = useState("Waiting for user decision");
   const runner = useMockRunner(mockEvents);
 
   useEffect(() => {
@@ -118,65 +113,7 @@ export function App() {
         </div>
       }
       details={
-        <div className="details-stack">
-          <Panel heading="Status">
-            <div className="status-stack">
-              <StatusBadge tone="success">Shell ready</StatusBadge>
-              {activeProject ? <span>{activeProject.name}</span> : <span>No project selected</span>}
-            </div>
-          </Panel>
-          <Panel
-            actions={
-              <StatusBadge tone={approvalState === "approved" ? "success" : "warning"}>
-                {approvalState}
-              </StatusBadge>
-            }
-            heading="Approvals"
-          >
-            <div className="approval-card">
-              <div className="approval-command">pnpm test</div>
-              <div className="approval-meta">
-                <span>{activeProject?.path ?? "No project selected"}</span>
-                <span>Medium risk</span>
-                <span>Verify project after changes</span>
-              </div>
-              <div className="approval-actions">
-                <Button
-                  disabled={!activeProject || approvalState !== "pending"}
-                  onClick={() => {
-                    setApprovalState("approved");
-                    setApprovalAudit("Command approved by user decision");
-                  }}
-                  size="sm"
-                  tone="primary"
-                >
-                  Approve
-                </Button>
-                <Button
-                  disabled={approvalState !== "pending"}
-                  onClick={() => {
-                    setApprovalState("rejected");
-                    setApprovalAudit("Command rejected and will not run");
-                  }}
-                  size="sm"
-                  tone="danger"
-                >
-                  Reject
-                </Button>
-              </div>
-              <div className="approval-audit">{approvalAudit}</div>
-            </div>
-          </Panel>
-          <Panel heading="Terminal">
-            <TerminalLogPanel groups={mockTerminalGroups} />
-          </Panel>
-          <Panel heading="Verification">
-            <VerificationCommands
-              commands={workspaceSummary?.testCommands ?? []}
-              cwd={activeProject?.path}
-            />
-          </Panel>
-        </div>
+        <DetailsPanels project={activeProject} workspaceSummary={workspaceSummary} />
       }
       sidebar={
         <Panel

@@ -1,9 +1,10 @@
 mod commands;
 
 pub use commands::{
-    desktop_app_info, desktop_codex_sidecar_diagnostics, desktop_diagnostics, desktop_health,
-    desktop_paths, desktop_scan_workspace, desktop_validate_project_path, DesktopAppInfo,
-    DesktopCodexSidecarDiagnostics, DesktopDiagnostics, DesktopHealth, DesktopPaths,
+    desktop_app_info, desktop_codex_sidecar_diagnostics, desktop_diagnostics, desktop_git_status,
+    desktop_health, desktop_paths, desktop_scan_workspace, desktop_validate_project_path,
+    DesktopAppInfo, DesktopCodexSidecarDiagnostics, DesktopDiagnostics, DesktopGitChangedFile,
+    DesktopGitCheckpoint, DesktopGitStatusSnapshot, DesktopHealth, DesktopPaths,
     DesktopProjectMetadata, DesktopWorkspaceSummary,
 };
 
@@ -18,7 +19,8 @@ pub fn run() {
             commands::desktop_diagnostics,
             commands::desktop_codex_sidecar_diagnostics,
             commands::desktop_validate_project_path,
-            commands::desktop_scan_workspace
+            commands::desktop_scan_workspace,
+            commands::desktop_git_status
         ])
         .run(tauri::generate_context!())
         .expect("failed to run Tauri app");
@@ -27,8 +29,9 @@ pub fn run() {
 #[cfg(test)]
 mod tests {
     use super::{
-        desktop_app_info, desktop_codex_sidecar_diagnostics, desktop_diagnostics, desktop_health,
-        desktop_paths, desktop_scan_workspace, desktop_validate_project_path,
+        desktop_app_info, desktop_codex_sidecar_diagnostics, desktop_diagnostics,
+        desktop_git_status, desktop_health, desktop_paths, desktop_scan_workspace,
+        desktop_validate_project_path,
     };
 
     #[test]
@@ -78,5 +81,12 @@ mod tests {
             .expect("temp dir can be scanned");
 
         assert!(!summary.name.is_empty());
+    }
+
+    #[test]
+    fn rejects_git_status_for_non_repo() {
+        let status = desktop_git_status(std::env::temp_dir().display().to_string());
+
+        assert!(status.is_err());
     }
 }

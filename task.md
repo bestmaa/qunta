@@ -688,7 +688,7 @@ docs                      architecture, security, setup, release notes
 #### T0905 - Add Git Status And Checkpoint View
 
 - Version: `v0.9.4`
-- Status: `pending`
+- Status: `completed`
 - Goal: Show git status before/after sessions and support local checkpoints.
 - Persona: Version control engineer; help users recover.
 - Success Criteria: UI shows branch, dirty files, changed files, and checkpoint metadata.

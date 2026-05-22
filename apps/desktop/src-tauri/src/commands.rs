@@ -2,7 +2,10 @@ use agent_runner::sidecar::{
     default_bundled_candidate, diagnose_sidecar, read_codex_version, SidecarConfig, SidecarSource,
 };
 use desktop_core::AppInfo;
-use sandbox::scanner::{scan_workspace, GitState};
+use sandbox::{
+    git_status::inspect_git_status,
+    scanner::{scan_workspace, GitState},
+};
 use serde::Serialize;
 
 #[derive(Debug, Serialize)]
@@ -64,6 +67,31 @@ pub struct DesktopWorkspaceSummary {
     pub test_commands: Vec<String>,
     pub git_state: &'static str,
     pub ignored_entries: Vec<String>,
+}
+
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DesktopGitChangedFile {
+    pub path: String,
+    pub status: String,
+}
+
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DesktopGitCheckpoint {
+    pub id: String,
+    pub label: String,
+    pub created_at_unix: u64,
+}
+
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DesktopGitStatusSnapshot {
+    pub root: String,
+    pub branch: String,
+    pub is_dirty: bool,
+    pub changed_files: Vec<DesktopGitChangedFile>,
+    pub checkpoint: DesktopGitCheckpoint,
 }
 
 #[tauri::command]
@@ -162,6 +190,30 @@ pub fn desktop_scan_workspace(path: String) -> Result<DesktopWorkspaceSummary, S
         test_commands: summary.test_commands,
         git_state: git_state_label(&summary.git_state),
         ignored_entries: summary.ignored_entries,
+    })
+}
+
+#[tauri::command]
+pub fn desktop_git_status(path: String) -> Result<DesktopGitStatusSnapshot, String> {
+    let snapshot = inspect_git_status(path).map_err(|error| error.to_string())?;
+
+    Ok(DesktopGitStatusSnapshot {
+        root: snapshot.root.display().to_string(),
+        branch: snapshot.branch,
+        is_dirty: snapshot.is_dirty,
+        changed_files: snapshot
+            .changed_files
+            .into_iter()
+            .map(|file| DesktopGitChangedFile {
+                path: file.path,
+                status: file.status,
+            })
+            .collect(),
+        checkpoint: DesktopGitCheckpoint {
+            id: snapshot.checkpoint.id,
+            label: snapshot.checkpoint.label,
+            created_at_unix: snapshot.checkpoint.created_at_unix,
+        },
     })
 }
 

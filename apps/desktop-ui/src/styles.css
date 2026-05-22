@@ -394,7 +394,9 @@ button {
 
 .terminal-panel,
 .terminal-output,
-.terminal-group {
+.terminal-group,
+.git-panel,
+.git-files {
   display: grid;
   gap: 8px;
 }
@@ -494,4 +496,35 @@ button {
   color: #f1f4f6;
   cursor: pointer;
   padding: 4px 8px;
+}
+
+.git-header,
+.git-actions {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.git-file,
+.checkpoint-card {
+  background: #15191d;
+  border: 1px solid #2d3338;
+  border-radius: 6px;
+  display: grid;
+  gap: 4px;
+  padding: 8px;
+}
+
+.git-file span,
+.checkpoint-card span {
+  color: #89939d;
+  font-size: 12px;
+}
+
+.git-file strong,
+.checkpoint-card code {
+  color: #c4ccd4;
+  font-size: 12px;
+  overflow-wrap: anywhere;
 }
