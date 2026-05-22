@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "tauri dev",
+    "package": "tauri build",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {

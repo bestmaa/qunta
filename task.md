@@ -811,7 +811,7 @@ docs                      architecture, security, setup, release notes
 #### T1202 - Add Desktop Packaging
 
 - Version: `v0.12.1`
-- Status: `pending`
+- Status: `completed`
 - Goal: Package the desktop app for Windows, macOS, and Linux where supported.
 - Persona: Build engineer; create installable artifacts.
 - Success Criteria: Build scripts produce platform packages with bundled sidecar strategy documented.
