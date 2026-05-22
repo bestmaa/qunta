@@ -27,6 +27,7 @@ export interface LoginStartResponse {
 }
 
 export interface SessionRefreshRequest {
+  readonly refreshToken: string;
   readonly sessionId: SessionId;
 }
 

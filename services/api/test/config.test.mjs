@@ -12,4 +12,9 @@ if (!serverSource.includes("/health")) {
   throw new Error("health route is missing");
 }
 
+const authRoutes = readFileSync(new URL("../src/auth-routes.ts", import.meta.url), "utf8");
+if (!authRoutes.includes("/v1/auth/device/start")) {
+  throw new Error("auth start route is missing");
+}
+
 execFileSync("node", ["--version"], { stdio: "ignore" });

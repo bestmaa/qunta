@@ -9,6 +9,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
+    "@qunta/shared-types": "workspace:*",
     "@tauri-apps/api": "^2.9.1"
   },
   "devDependencies": {

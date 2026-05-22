@@ -301,7 +301,7 @@ docs                      architecture, security, setup, release notes
 #### T0403 - Add Auth Session Flow
 
 - Version: `v0.4.2`
-- Status: `pending`
+- Status: `completed`
 - Goal: Implement desktop-friendly login/session flow.
 - Persona: Auth engineer; make sign-in safe for desktop users.
 - Success Criteria: API supports session create/refresh/revoke and desktop stores token securely.

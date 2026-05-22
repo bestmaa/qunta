@@ -1,27 +1,35 @@
 import { createServer as createHttpServer } from "node:http";
 
+import { AuthStore } from "./auth-store.js";
+import { handleAuthRoute } from "./auth-routes.js";
 import type { ApiConfig } from "./config.js";
 import { createHealthResponse } from "./health.js";
+import { writeJson } from "./http-json.js";
 
 export function createServer(config: ApiConfig) {
-  return createHttpServer((request, response) => {
-    if (request.method === "GET" && request.url === "/health") {
-      writeJson(response, 200, createHealthResponse(config));
+  const authStore = new AuthStore();
+
+  return createHttpServer(async (request, response) => {
+    const authResult = await handleAuthRoute(authStore, request);
+    if (authResult) {
+      writeJson(response, authResult);
       return;
     }
 
-    writeJson(response, 404, {
-      error: {
-        code: "not_found",
-        message: "Route not found"
+    if (request.method === "GET" && request.url === "/health") {
+      writeJson(response, { body: createHealthResponse(config), status: 200 });
+      return;
+    }
+
+    writeJson(response, {
+      body: {
+        error: {
+          code: "not_found",
+          message: "Route not found"
+        },
+        ok: false
       },
-      ok: false
+      status: 404
     });
   });
-}
-
-function writeJson(response: NodeJS.WritableStream & { statusCode: number }, status: number, body: unknown) {
-  response.statusCode = status;
-  response.write(JSON.stringify(body));
-  response.end();
 }

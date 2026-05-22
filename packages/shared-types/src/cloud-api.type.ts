@@ -10,11 +10,31 @@ export interface DeviceLoginPollRequest {
   readonly deviceCode: string;
 }
 
+export interface DeviceLoginStartRequest {
+  readonly deviceName: string;
+  readonly platform: Platform;
+}
+
+export interface DeviceLoginStartResponse {
+  readonly deviceCode: string;
+  readonly expiresAt: string;
+  readonly verificationUrl: string;
+}
+
 export interface DeviceLoginCompleteResponse {
   readonly accessToken: string;
   readonly accountId: AccountId;
   readonly expiresAt: string;
   readonly refreshToken: string;
+  readonly sessionId: SessionId;
+}
+
+export interface SessionRevokeRequest {
+  readonly sessionId: SessionId;
+}
+
+export interface SessionRevokeResponse {
+  readonly revoked: true;
   readonly sessionId: SessionId;
 }
 
