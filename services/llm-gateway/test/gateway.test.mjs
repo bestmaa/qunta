@@ -12,6 +12,7 @@ const deepSeekSource = readFileSync(
   new URL("../src/providers/deepseek-adapter.ts", import.meta.url),
   "utf8"
 );
+const routingSource = readFileSync(new URL("../src/routing-policy.ts", import.meta.url), "utf8");
 
 if (!configSource.includes("QUNTA_GATEWAY_PORT must be a valid TCP port")) {
   throw new Error("gateway config validation is missing");
@@ -43,4 +44,12 @@ if (!deepSeekSource.includes("mapDeepSeekUsage")) {
 
 if (deepSeekSource.includes("console.")) {
   throw new Error("DeepSeek adapter must not log provider details");
+}
+
+if (!routingSource.includes("chooseProvider")) {
+  throw new Error("routing policy is missing");
+}
+
+if (routingSource.includes("desktopProvider")) {
+  throw new Error("desktop must not choose providers");
 }

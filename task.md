@@ -394,7 +394,7 @@ docs                      architecture, security, setup, release notes
 #### T0506 - Add Routing Policy Engine
 
 - Version: `v0.5.5`
-- Status: `pending`
+- Status: `completed`
 - Goal: Add server-side policy for model/provider selection, fallback, limits, and cost controls.
 - Persona: AI cost engineer; route tasks without exposing choices to users.
 - Success Criteria: Policy can route by plan, task type, latency, failure, and budget.
