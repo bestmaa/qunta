@@ -1,5 +1,6 @@
 pub mod codex_config;
 pub mod process;
+pub mod session;
 pub mod sidecar;
 
 use desktop_core::{DesktopError, DesktopResult};

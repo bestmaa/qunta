@@ -461,7 +461,7 @@ docs                      architecture, security, setup, release notes
 #### T0605 - Run First Local Codex Session
 
 - Version: `v0.6.4`
-- Status: `pending`
+- Status: `completed`
 - Goal: Execute a controlled Codex session against a test workspace and mocked gateway.
 - Persona: Agent integration engineer; prove the full local loop.
 - Success Criteria: Session starts, streams events, writes a harmless file change, and exits cleanly.
