@@ -770,7 +770,7 @@ docs                      architecture, security, setup, release notes
 #### T1102 - Add Permission Mode Settings
 
 - Version: `v0.11.1`
-- Status: `pending`
+- Status: `completed`
 - Goal: Let users choose default approval mode per project.
 - Persona: Safety UX engineer; give control without confusion.
 - Success Criteria: UI explains modes briefly, stores project-level preference, and enforces through runner config.

@@ -2,6 +2,7 @@ import { transitionSession, type SessionStatus } from "@qunta/shared-types";
 import { useRef, useState } from "react";
 
 import type { AgentTimelineEvent } from "./AgentTimeline.js";
+import type { RunnerConfig } from "./runner-config.js";
 
 export interface MockRunnerState {
   readonly events: readonly AgentTimelineEvent[];
@@ -11,7 +12,10 @@ export interface MockRunnerState {
   readonly status: SessionStatus;
 }
 
-export function useMockRunner(seedEvents: readonly AgentTimelineEvent[]): MockRunnerState {
+export function useMockRunner(
+  seedEvents: readonly AgentTimelineEvent[],
+  config: RunnerConfig
+): MockRunnerState {
   const [events, setEvents] = useState(seedEvents);
   const [status, setStatus] = useState<SessionStatus>("idle");
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
@@ -28,7 +32,7 @@ export function useMockRunner(seedEvents: readonly AgentTimelineEvent[]): MockRu
     clearTimers();
     setStatus(transitionSession({ status: "idle" }, "start").status);
     setEvents([
-      event("start", "Session queued", "thinking", prompt),
+      event("start", "Session queued", "thinking", `${prompt}\nmode=${config.approvalMode}`),
       event("ctx", "Project context attached", "file_read", "workspace summary")
     ]);
 

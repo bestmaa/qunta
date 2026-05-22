@@ -10,6 +10,7 @@ import {
 } from "./desktop-commands.js";
 import { GitCheckpointView } from "./GitCheckpointView.js";
 import { mockTerminalGroups } from "./mock-data.js";
+import type { ApprovalMode } from "./runner-config.js";
 import { SettingsPanel } from "./SettingsPanel.js";
 import { TerminalLogPanel } from "./TerminalLogPanel.js";
 import { VerificationCommands } from "./VerificationCommands.js";
@@ -17,11 +18,20 @@ import { VerificationCommands } from "./VerificationCommands.js";
 type ApprovalState = "approved" | "pending" | "rejected";
 
 export interface DetailsPanelsProps {
+  readonly approvalMode: ApprovalMode;
+  readonly isSessionRunning: boolean;
+  readonly onApprovalModeChange: (mode: ApprovalMode) => void;
   readonly project: DesktopProjectMetadata | null;
   readonly workspaceSummary: DesktopWorkspaceSummary | null;
 }
 
-export function DetailsPanels({ project, workspaceSummary }: DetailsPanelsProps) {
+export function DetailsPanels({
+  approvalMode,
+  isSessionRunning,
+  onApprovalModeChange,
+  project,
+  workspaceSummary
+}: DetailsPanelsProps) {
   const [approvalState, setApprovalState] = useState<ApprovalState>("pending");
   const [approvalAudit, setApprovalAudit] = useState("Waiting for user decision");
   const [gitStatus, setGitStatus] = useState<DesktopGitStatusSnapshot | null>(null);
@@ -121,7 +131,12 @@ export function DetailsPanels({ project, workspaceSummary }: DetailsPanelsProps)
         <VerificationCommands commands={workspaceSummary?.testCommands ?? []} cwd={project?.path} />
       </Panel>
       <Panel heading="Settings">
-        <SettingsPanel project={project} />
+        <SettingsPanel
+          approvalMode={approvalMode}
+          isSessionRunning={isSessionRunning}
+          onApprovalModeChange={onApprovalModeChange}
+          project={project}
+        />
       </Panel>
     </div>
   );

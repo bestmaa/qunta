@@ -15,6 +15,11 @@ import { DiffViewer } from "./DiffViewer.js";
 import { FileTree } from "./FileTree.js";
 import { mockDiffs, mockEvents, mockFiles } from "./mock-data.js";
 import { PromptComposer } from "./PromptComposer.js";
+import {
+  approvalModeLabel,
+  buildRunnerConfig,
+  type ApprovalMode
+} from "./runner-config.js";
 import { useMockRunner } from "./useMockRunner.js";
 
 const recentProjectsKey = "qunta.recentProjects";
@@ -25,7 +30,8 @@ export function App() {
   const [recentProjects, setRecentProjects] = useState<readonly DesktopProjectMetadata[]>([]);
   const [pickerError, setPickerError] = useState<string | null>(null);
   const [isPicking, setIsPicking] = useState(false);
-  const runner = useMockRunner(mockEvents);
+  const [approvalMode, setApprovalMode] = useState<ApprovalMode>("suggest");
+  const runner = useMockRunner(mockEvents, buildRunnerConfig(activeProject, approvalMode));
 
   useEffect(() => {
     setRecentProjects(readRecentProjects());
@@ -105,7 +111,7 @@ export function App() {
             <div className="error-strip">No active runtime errors.</div>
           </div>
           <footer className="status-bar">
-            <span>Profile: Suggest</span>
+            <span>Profile: {approvalModeLabel(approvalMode)}</span>
             <span>Session: {runner.status}</span>
             <span>Gateway: ready</span>
             <span>Sidecar: diagnostics pending</span>
@@ -113,7 +119,13 @@ export function App() {
         </div>
       }
       details={
-        <DetailsPanels project={activeProject} workspaceSummary={workspaceSummary} />
+        <DetailsPanels
+          approvalMode={approvalMode}
+          isSessionRunning={runner.isRunning}
+          onApprovalModeChange={setApprovalMode}
+          project={activeProject}
+          workspaceSummary={workspaceSummary}
+        />
       }
       sidebar={
         <Panel

@@ -12,6 +12,7 @@ const runner = readFileSync(join(here, "../src/useMockRunner.ts"), "utf8");
 const verification = readFileSync(join(here, "../src/VerificationCommands.tsx"), "utf8");
 const gitCheckpoint = readFileSync(join(here, "../src/GitCheckpointView.tsx"), "utf8");
 const settings = readFileSync(join(here, "../src/SettingsPanel.tsx"), "utf8");
+const runnerConfig = readFileSync(join(here, "../src/runner-config.ts"), "utf8");
 
 if (!source.includes("canSubmitPrompt")) {
   throw new Error("Prompt composer must export validation logic.");
@@ -61,9 +62,15 @@ for (const token of ["Mark Checkpoint", "changedFiles", "branch"]) {
   }
 }
 
-for (const token of ["localStorage", "Telemetry", "Reset Trusted Commands", "confirmDanger"]) {
+for (const token of ["projectPermissionModes", "Telemetry", "Reset Trusted Commands", "confirmDanger"]) {
   if (!settings.includes(token)) {
     throw new Error(`Settings panel is missing ${token}.`);
+  }
+}
+
+for (const token of ["buildRunnerConfig", "approvalMode", "projectId"]) {
+  if (!runnerConfig.includes(token)) {
+    throw new Error(`Runner config is missing ${token}.`);
   }
 }
 

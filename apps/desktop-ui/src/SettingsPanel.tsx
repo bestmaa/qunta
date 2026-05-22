@@ -2,12 +2,13 @@ import { Button, StatusBadge } from "@qunta/ui";
 import { useEffect, useState } from "react";
 
 import type { DesktopProjectMetadata } from "./desktop-commands.js";
+import { approvalModeLabel, type ApprovalMode } from "./runner-config.js";
 
-type ApprovalMode = "auto_edit" | "controlled_full" | "suggest";
 type UpdateChannel = "beta" | "stable";
 
 interface LocalSettings {
   readonly approvalMode: ApprovalMode;
+  readonly projectPermissionModes: Record<string, ApprovalMode>;
   readonly telemetryEnabled: boolean;
   readonly trustedCommandsCleared: boolean;
   readonly updateChannel: UpdateChannel;
@@ -22,6 +23,7 @@ const settingsKey = "qunta.desktopSettings";
 
 const defaultLocalSettings: LocalSettings = {
   approvalMode: "suggest",
+  projectPermissionModes: {},
   telemetryEnabled: false,
   trustedCommandsCleared: false,
   updateChannel: "stable"
@@ -33,21 +35,50 @@ const cloudSettings: CloudSettings = {
 };
 
 export interface SettingsPanelProps {
+  readonly approvalMode: ApprovalMode;
+  readonly isSessionRunning: boolean;
+  readonly onApprovalModeChange: (mode: ApprovalMode) => void;
   readonly project: DesktopProjectMetadata | null;
 }
 
-export function SettingsPanel({ project }: SettingsPanelProps) {
+export function SettingsPanel({
+  approvalMode,
+  isSessionRunning,
+  onApprovalModeChange,
+  project
+}: SettingsPanelProps) {
   const [settings, setSettings] = useState<LocalSettings>(defaultLocalSettings);
   const [confirmDanger, setConfirmDanger] = useState(false);
+  const [confirmRunningMode, setConfirmRunningMode] = useState(false);
   const [diagnosticState, setDiagnosticState] = useState("Diagnostics ready");
 
   useEffect(() => {
-    setSettings(readLocalSettings());
-  }, []);
+    const nextSettings = readLocalSettings();
+    setSettings(nextSettings);
+    const projectMode = project ? nextSettings.projectPermissionModes[project.id] : undefined;
+    onApprovalModeChange(projectMode ?? nextSettings.approvalMode);
+  }, [project?.id]);
 
   function saveSettings(nextSettings: LocalSettings) {
     setSettings(nextSettings);
     localStorage.setItem(settingsKey, JSON.stringify(nextSettings));
+  }
+
+  function saveApprovalMode(mode: ApprovalMode) {
+    const nextSettings = {
+      ...settings,
+      approvalMode: mode,
+      projectPermissionModes: project
+        ? { ...settings.projectPermissionModes, [project.id]: mode }
+        : settings.projectPermissionModes
+    };
+    saveSettings(nextSettings);
+    onApprovalModeChange(mode);
+    setDiagnosticState(
+      isSessionRunning && !confirmRunningMode
+        ? "Saved for new sessions"
+        : "Runner config updated"
+    );
   }
 
   return (
@@ -72,14 +103,24 @@ export function SettingsPanel({ project }: SettingsPanelProps) {
           Permissions
           <select
             onChange={(event) =>
-              saveSettings({ ...settings, approvalMode: event.target.value as ApprovalMode })
+              saveApprovalMode(event.target.value as ApprovalMode)
             }
-            value={settings.approvalMode}
+            value={approvalMode}
           >
             <option value="suggest">Suggest</option>
             <option value="auto_edit">Auto edit</option>
             <option value="controlled_full">Controlled full</option>
           </select>
+        </label>
+        <span>Mode: {approvalModeLabel(approvalMode)}. Changes are for new sessions.</span>
+        <label className="settings-toggle">
+          <input
+            checked={confirmRunningMode}
+            disabled={!isSessionRunning}
+            onChange={(event) => setConfirmRunningMode(event.target.checked)}
+            type="checkbox"
+          />
+          Apply during running session
         </label>
       </section>
       <section className="settings-row">
