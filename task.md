@@ -448,7 +448,7 @@ docs                      architecture, security, setup, release notes
 #### T0604 - Add Codex Config Generation
 
 - Version: `v0.6.3`
-- Status: `pending`
+- Status: `completed`
 - Goal: Generate per-session Codex config that routes LLM calls through the private gateway.
 - Persona: Agent configuration engineer; isolate sessions and secrets.
 - Success Criteria: Config includes gateway base URL, temporary session token, model intent, sandbox mode, and approval mode.
