@@ -1,8 +1,9 @@
 mod commands;
 
 pub use commands::{
-    desktop_app_info, desktop_diagnostics, desktop_health, desktop_paths, DesktopAppInfo,
-    DesktopDiagnostics, DesktopHealth, DesktopPaths,
+    desktop_app_info, desktop_codex_sidecar_diagnostics, desktop_diagnostics, desktop_health,
+    desktop_paths, DesktopAppInfo, DesktopCodexSidecarDiagnostics, DesktopDiagnostics,
+    DesktopHealth, DesktopPaths,
 };
 
 #[cfg(not(test))]
@@ -12,7 +13,8 @@ pub fn run() {
             commands::desktop_app_info,
             commands::desktop_health,
             commands::desktop_paths,
-            commands::desktop_diagnostics
+            commands::desktop_diagnostics,
+            commands::desktop_codex_sidecar_diagnostics
         ])
         .run(tauri::generate_context!())
         .expect("failed to run Tauri app");
@@ -20,7 +22,10 @@ pub fn run() {
 
 #[cfg(test)]
 mod tests {
-    use super::{desktop_app_info, desktop_diagnostics, desktop_health, desktop_paths};
+    use super::{
+        desktop_app_info, desktop_codex_sidecar_diagnostics, desktop_diagnostics, desktop_health,
+        desktop_paths,
+    };
 
     #[test]
     fn reports_desktop_health() {
@@ -44,5 +49,13 @@ mod tests {
 
         assert!(!paths.temp_dir.is_empty());
         assert_eq!(diagnostics.app.name, "Qunta");
+    }
+
+    #[test]
+    fn reports_codex_sidecar_diagnostics() {
+        let diagnostics = desktop_codex_sidecar_diagnostics();
+
+        assert!(!diagnostics.message.is_empty());
+        assert!(!diagnostics.required_version.is_empty());
     }
 }

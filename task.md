@@ -435,7 +435,7 @@ docs                      architecture, security, setup, release notes
 #### T0603 - Bundle Codex Sidecar
 
 - Version: `v0.6.2`
-- Status: `pending`
+- Status: `completed`
 - Goal: Add sidecar strategy for bundling or locating the Codex CLI binary.
 - Persona: Desktop distribution engineer; make agent runtime installable.
 - Success Criteria: App can locate bundled/dev Codex binary, validate version, and report diagnostics.

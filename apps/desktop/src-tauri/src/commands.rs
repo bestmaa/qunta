@@ -1,3 +1,6 @@
+use agent_runner::sidecar::{
+    default_bundled_candidate, diagnose_sidecar, read_codex_version, SidecarConfig, SidecarSource,
+};
 use desktop_core::AppInfo;
 use serde::Serialize;
 
@@ -25,8 +28,20 @@ pub struct DesktopPaths {
 #[derive(Debug, Serialize)]
 pub struct DesktopDiagnostics {
     pub app: DesktopAppInfo,
+    pub codex: DesktopCodexSidecarDiagnostics,
     pub os: &'static str,
     pub paths: DesktopPaths,
+}
+
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DesktopCodexSidecarDiagnostics {
+    pub ready: bool,
+    pub message: String,
+    pub required_version: String,
+    pub detected_version: Option<String>,
+    pub path: Option<String>,
+    pub source: Option<&'static str>,
 }
 
 #[tauri::command]
@@ -63,13 +78,39 @@ pub fn desktop_paths() -> DesktopPaths {
 pub fn desktop_diagnostics() -> DesktopDiagnostics {
     DesktopDiagnostics {
         app: desktop_app_info(),
+        codex: desktop_codex_sidecar_diagnostics(),
         os: std::env::consts::OS,
         paths: desktop_paths(),
     }
 }
 
+#[tauri::command]
+pub fn desktop_codex_sidecar_diagnostics() -> DesktopCodexSidecarDiagnostics {
+    let config = SidecarConfig::new(default_bundled_candidate());
+    let diagnostics = diagnose_sidecar(&config, read_codex_version);
+    let location = diagnostics.location;
+
+    DesktopCodexSidecarDiagnostics {
+        ready: diagnostics.ready,
+        message: diagnostics.message,
+        required_version: diagnostics.required_version,
+        detected_version: diagnostics.detected_version,
+        path: location
+            .as_ref()
+            .map(|value| value.path.display().to_string()),
+        source: location.map(|value| source_label(&value.source)),
+    }
+}
+
 fn app_info() -> AppInfo {
     AppInfo::new("Qunta", env!("CARGO_PKG_VERSION"))
+}
+
+fn source_label(source: &SidecarSource) -> &'static str {
+    match source {
+        SidecarSource::DevOverride => "devOverride",
+        SidecarSource::Bundled => "bundled",
+    }
 }
 
 fn path_string(path: std::io::Result<std::path::PathBuf>) -> String {

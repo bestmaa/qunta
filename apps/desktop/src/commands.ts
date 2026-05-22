@@ -19,8 +19,18 @@ export interface DesktopPaths {
 
 export interface DesktopDiagnostics {
   readonly app: DesktopAppInfo;
+  readonly codex: DesktopCodexSidecarDiagnostics;
   readonly os: string;
   readonly paths: DesktopPaths;
+}
+
+export interface DesktopCodexSidecarDiagnostics {
+  readonly ready: boolean;
+  readonly message: string;
+  readonly requiredVersion: string;
+  readonly detectedVersion: string | null;
+  readonly path: string | null;
+  readonly source: "devOverride" | "bundled" | null;
 }
 
 export function getDesktopAppInfo(): Promise<DesktopAppInfo> {
@@ -37,4 +47,8 @@ export function getDesktopPaths(): Promise<DesktopPaths> {
 
 export function getDesktopDiagnostics(): Promise<DesktopDiagnostics> {
   return invoke<DesktopDiagnostics>("desktop_diagnostics");
+}
+
+export function getCodexSidecarDiagnostics(): Promise<DesktopCodexSidecarDiagnostics> {
+  return invoke<DesktopCodexSidecarDiagnostics>("desktop_codex_sidecar_diagnostics");
 }

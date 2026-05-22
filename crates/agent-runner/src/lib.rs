@@ -1,4 +1,5 @@
 pub mod process;
+pub mod sidecar;
 
 use desktop_core::{DesktopError, DesktopResult};
 

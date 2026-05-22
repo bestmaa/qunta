@@ -10,6 +10,7 @@ description = "Native Tauri shell for Qunta."
 tauri-build = { version = "2.5.1", features = [] }
 
 [dependencies]
+agent-runner = { path = "../../../crates/agent-runner" }
 desktop-core = { path = "../../../crates/desktop-core" }
 serde = { version = "1.0.228", features = ["derive"] }
 tauri = { version = "2.9.5", features = [] }
