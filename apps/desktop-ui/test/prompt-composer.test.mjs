@@ -30,7 +30,7 @@ if (!fileTree.includes("deniedPatterns") || !fileTree.includes("filterVisibleEnt
   throw new Error("File tree must filter denied paths.");
 }
 
-for (const token of ["truncateDiff", "Copy Path", "Accept", "Reject"]) {
+for (const token of ["truncateDiff", "Copy Path", "Apply Accepted", "Accept", "Reject"]) {
   if (!diffViewer.includes(token)) {
     throw new Error(`Diff viewer is missing ${token}.`);
   }

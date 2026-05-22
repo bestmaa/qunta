@@ -662,7 +662,7 @@ docs                      architecture, security, setup, release notes
 #### T0903 - Add Patch Apply Flow
 
 - Version: `v0.9.2`
-- Status: `pending`
+- Status: `completed`
 - Goal: Allow users to apply accepted patches to the selected workspace.
 - Persona: Source control engineer; make file edits reviewable.
 - Success Criteria: Patches apply atomically where possible, conflict clearly, and create audit entries.

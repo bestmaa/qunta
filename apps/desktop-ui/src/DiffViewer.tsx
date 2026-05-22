@@ -57,6 +57,9 @@ export function DiffViewer({ files }: DiffViewerProps) {
         <Button onClick={() => void navigator.clipboard?.writeText(activeFile.path)} size="sm">
           Copy Path
         </Button>
+        <Button disabled={Object.values(decisions).every((value) => value !== "accepted")} size="sm">
+          Apply Accepted
+        </Button>
         <Button onClick={() => setDecisions({ ...decisions, [activeFile.path]: "accepted" })} size="sm">
           Accept
         </Button>
