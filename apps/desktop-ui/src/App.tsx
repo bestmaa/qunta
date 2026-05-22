@@ -15,6 +15,7 @@ import { FileTree } from "./FileTree.js";
 import { mockDiffs, mockEvents, mockFiles, mockTerminalGroups } from "./mock-data.js";
 import { PromptComposer } from "./PromptComposer.js";
 import { TerminalLogPanel } from "./TerminalLogPanel.js";
+import { useMockRunner } from "./useMockRunner.js";
 
 const recentProjectsKey = "qunta.recentProjects";
 
@@ -28,7 +29,7 @@ export function App() {
   const [isPicking, setIsPicking] = useState(false);
   const [approvalState, setApprovalState] = useState<ApprovalState>("pending");
   const [approvalAudit, setApprovalAudit] = useState("Waiting for user decision");
-  const [composerStatus, setComposerStatus] = useState("Composer ready");
+  const runner = useMockRunner(mockEvents);
 
   useEffect(() => {
     setRecentProjects(readRecentProjects());
@@ -96,18 +97,20 @@ export function App() {
             )}
           </Panel>
           <div className="session-surface">
-            <div className="session-placeholder">{composerStatus}</div>
-            <AgentTimeline events={mockEvents} />
+            <div className="session-placeholder">Session state: {runner.status}</div>
+            <AgentTimeline events={runner.events} />
             <DiffViewer files={mockDiffs} />
             <PromptComposer
               disabled={!activeProject}
-              onCancel={() => setComposerStatus("Session cancelled")}
-              onSubmit={(prompt) => setComposerStatus(`Queued: ${prompt}`)}
+              isRunning={runner.isRunning}
+              onCancel={runner.cancel}
+              onSubmit={runner.start}
             />
             <div className="error-strip">No active runtime errors.</div>
           </div>
           <footer className="status-bar">
             <span>Profile: Suggest</span>
+            <span>Session: {runner.status}</span>
             <span>Gateway: ready</span>
             <span>Sidecar: diagnostics pending</span>
           </footer>

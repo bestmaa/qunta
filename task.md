@@ -649,7 +649,7 @@ docs                      architecture, security, setup, release notes
 #### T0902 - Connect UI To Local Runner
 
 - Version: `v0.9.1`
-- Status: `pending`
+- Status: `completed`
 - Goal: Connect chat submission to the local agent runner and stream events into UI.
 - Persona: Full-stack desktop engineer; complete the local loop.
 - Success Criteria: User can send a prompt, runner starts, events stream, and session can cancel.
