@@ -16,6 +16,7 @@ import { mockDiffs, mockEvents, mockFiles, mockTerminalGroups } from "./mock-dat
 import { PromptComposer } from "./PromptComposer.js";
 import { TerminalLogPanel } from "./TerminalLogPanel.js";
 import { useMockRunner } from "./useMockRunner.js";
+import { VerificationCommands } from "./VerificationCommands.js";
 
 const recentProjectsKey = "qunta.recentProjects";
 
@@ -168,6 +169,12 @@ export function App() {
           </Panel>
           <Panel heading="Terminal">
             <TerminalLogPanel groups={mockTerminalGroups} />
+          </Panel>
+          <Panel heading="Verification">
+            <VerificationCommands
+              commands={workspaceSummary?.testCommands ?? []}
+              cwd={activeProject?.path}
+            />
           </Panel>
         </div>
       }

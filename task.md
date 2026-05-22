@@ -675,7 +675,7 @@ docs                      architecture, security, setup, release notes
 #### T0904 - Add Test Command Suggestions
 
 - Version: `v0.9.3`
-- Status: `pending`
+- Status: `completed`
 - Goal: Suggest and run project verification commands after changes.
 - Persona: DX engineer; make "verify after code" real in the product.
 - Success Criteria: App suggests detected test commands and lets user approve execution.

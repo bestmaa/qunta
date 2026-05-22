@@ -9,6 +9,7 @@ const fileTree = readFileSync(join(here, "../src/FileTree.tsx"), "utf8");
 const diffViewer = readFileSync(join(here, "../src/DiffViewer.tsx"), "utf8");
 const terminal = readFileSync(join(here, "../src/TerminalLogPanel.tsx"), "utf8");
 const runner = readFileSync(join(here, "../src/useMockRunner.ts"), "utf8");
+const verification = readFileSync(join(here, "../src/VerificationCommands.tsx"), "utf8");
 
 if (!source.includes("canSubmitPrompt")) {
   throw new Error("Prompt composer must export validation logic.");
@@ -46,4 +47,8 @@ for (const token of ["clearTimeout", "transitionSession", "cancel"]) {
   if (!runner.includes(token)) {
     throw new Error(`Mock runner is missing ${token}.`);
   }
+}
+
+if (!verification.includes("Approve Run") || !verification.includes("cwd")) {
+  throw new Error("Verification commands must require project cwd approval.");
 }

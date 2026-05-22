@@ -2,6 +2,7 @@ pub mod command_approval;
 pub mod patch_apply;
 pub mod permission_profile;
 pub mod scanner;
+pub mod verification;
 
 use std::path::{Path, PathBuf};
 
