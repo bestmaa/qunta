@@ -8,6 +8,7 @@ import {
   scanWorkspace,
   validateProjectPath
 } from "./desktop-commands.js";
+import { PromptComposer } from "./PromptComposer.js";
 
 const recentProjectsKey = "qunta.recentProjects";
 
@@ -21,6 +22,7 @@ export function App() {
   const [isPicking, setIsPicking] = useState(false);
   const [approvalState, setApprovalState] = useState<ApprovalState>("pending");
   const [approvalAudit, setApprovalAudit] = useState("Waiting for user decision");
+  const [composerStatus, setComposerStatus] = useState("Composer ready");
 
   useEffect(() => {
     setRecentProjects(readRecentProjects());
@@ -88,7 +90,12 @@ export function App() {
             )}
           </Panel>
           <div className="session-surface">
-            <div className="session-placeholder">Timeline, diff viewer, and composer will live here.</div>
+            <div className="session-placeholder">{composerStatus}</div>
+            <PromptComposer
+              disabled={!activeProject}
+              onCancel={() => setComposerStatus("Session cancelled")}
+              onSubmit={(prompt) => setComposerStatus(`Queued: ${prompt}`)}
+            />
             <div className="error-strip">No active runtime errors.</div>
           </div>
           <footer className="status-bar">

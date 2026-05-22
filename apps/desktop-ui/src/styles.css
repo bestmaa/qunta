@@ -190,7 +190,7 @@ button {
   border-radius: 6px;
   display: grid;
   gap: 10px;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: 1fr auto auto;
   min-height: 280px;
   padding: 12px;
 }
@@ -262,4 +262,56 @@ button {
   color: #c4ccd4;
   font-size: 12px;
   padding-top: 8px;
+}
+
+.composer {
+  border-top: 1px solid #2d3338;
+  display: grid;
+  gap: 10px;
+  padding-top: 10px;
+}
+
+.composer-topline,
+.composer-actions,
+.composer-submit {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.composer-toggle {
+  align-items: center;
+  color: #c4ccd4;
+  display: inline-flex;
+  font-size: 12px;
+  gap: 6px;
+}
+
+.composer-input {
+  background: #15191d;
+  border: 1px solid #2d3338;
+  border-radius: 6px;
+  color: #f1f4f6;
+  font: inherit;
+  min-height: 92px;
+  padding: 10px;
+  resize: vertical;
+}
+
+.attachment-row {
+  color: #89939d;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 12px;
+  gap: 8px;
+}
+
+.attachment-chip {
+  background: #1b2024;
+  border: 1px solid #2d3338;
+  border-radius: 6px;
+  color: #f1f4f6;
+  cursor: pointer;
+  padding: 4px 8px;
 }

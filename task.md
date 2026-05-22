@@ -569,7 +569,7 @@ docs                      architecture, security, setup, release notes
 #### T0803 - Build Chat Composer
 
 - Version: `v0.8.2`
-- Status: `pending`
+- Status: `completed`
 - Goal: Add prompt composer with attachments, project context toggle, and send/cancel controls.
 - Persona: Frontend UX engineer; make task submission ergonomic.
 - Success Criteria: Composer validates input, supports multiline prompts, disabled states, and keyboard shortcuts.

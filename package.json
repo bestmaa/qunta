@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "node tools/check-file-limits.mjs && node tools/check-markdown.mjs",
     "typecheck": "node tools/check-workspace-layout.mjs && corepack pnpm --filter @qunta/shared-types typecheck && corepack pnpm --filter @qunta/ui typecheck && corepack pnpm --filter @qunta/desktop typecheck && corepack pnpm --filter @qunta/desktop-ui typecheck && corepack pnpm --filter @qunta/api typecheck && corepack pnpm --filter @qunta/llm-gateway typecheck",
-    "test": "node tools/check-task-queue.mjs && corepack pnpm --filter @qunta/ui test && corepack pnpm --filter @qunta/api test && corepack pnpm --filter @qunta/llm-gateway test",
+    "test": "node tools/check-task-queue.mjs && corepack pnpm --filter @qunta/ui test && corepack pnpm --filter @qunta/desktop-ui test && corepack pnpm --filter @qunta/api test && corepack pnpm --filter @qunta/llm-gateway test",
     "check": "corepack pnpm lint && corepack pnpm typecheck && corepack pnpm test"
   },
   "engines": {
