@@ -342,7 +342,7 @@ docs                      architecture, security, setup, release notes
 #### T0502 - Scaffold LLM Gateway Service
 
 - Version: `v0.5.1`
-- Status: `pending`
+- Status: `completed`
 - Goal: Create `services/llm-gateway` with config validation, auth middleware, streaming foundation, and tests.
 - Persona: AI backend engineer; create a reliable routing service.
 - Success Criteria: Gateway starts, accepts authenticated requests, returns mocked streaming responses, and records usage metadata.

@@ -1,0 +1,18 @@
+{
+  "name": "@qunta/llm-gateway",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Provider-hidden LLM gateway for Qunta.",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "test": "node test/gateway.test.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@qunta/shared-types": "workspace:*"
+  },
+  "devDependencies": {
+    "tsx": "^4.21.0"
+  }
+}
