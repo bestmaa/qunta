@@ -355,7 +355,7 @@ docs                      architecture, security, setup, release notes
 #### T0503 - Add Provider Adapter Interface
 
 - Version: `v0.5.2`
-- Status: `pending`
+- Status: `completed`
 - Goal: Add a strict interface for OpenAI-compatible and custom provider adapters.
 - Persona: Provider integration engineer; make provider swaps safe.
 - Success Criteria: Interface covers request transform, streaming parse, usage mapping, error mapping, and capability metadata.
