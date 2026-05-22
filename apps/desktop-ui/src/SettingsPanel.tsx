@@ -1,7 +1,7 @@
 import { Button, StatusBadge } from "@qunta/ui";
 import { useEffect, useState } from "react";
 
-import type { DesktopProjectMetadata } from "./desktop-commands.js";
+import { exportDiagnosticsBundle, type DesktopProjectMetadata } from "./desktop-commands.js";
 import { approvalModeLabel, type ApprovalMode } from "./runner-config.js";
 
 type UpdateChannel = "beta" | "stable";
@@ -50,6 +50,7 @@ export function SettingsPanel({
   const [settings, setSettings] = useState<LocalSettings>(defaultLocalSettings);
   const [confirmDanger, setConfirmDanger] = useState(false);
   const [confirmRunningMode, setConfirmRunningMode] = useState(false);
+  const [privacyMode, setPrivacyMode] = useState(true);
   const [diagnosticState, setDiagnosticState] = useState("Diagnostics ready");
 
   useEffect(() => {
@@ -145,10 +146,27 @@ export function SettingsPanel({
         </select>
       </section>
       <section className="settings-row">
-        <Button onClick={() => setDiagnosticState("Diagnostics bundle staged")} size="sm">
+        <Button
+          onClick={() => {
+            void exportDiagnosticsBundle(privacyMode).then((bundle) => {
+              setDiagnosticState(`Diagnostics exported for ${bundle.os}`);
+            }).catch(() => setDiagnosticState("Diagnostics export unavailable"));
+          }}
+          size="sm"
+        >
           Diagnostics
         </Button>
         <span>{diagnosticState}</span>
+      </section>
+      <section>
+        <label className="settings-toggle">
+          <input
+            checked={privacyMode}
+            onChange={(event) => setPrivacyMode(event.target.checked)}
+            type="checkbox"
+          />
+          Privacy mode
+        </label>
       </section>
       <section>
         <label className="settings-toggle">

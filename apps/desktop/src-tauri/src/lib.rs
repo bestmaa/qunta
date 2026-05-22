@@ -1,4 +1,5 @@
 mod commands;
+mod diagnostics_bundle;
 
 pub use commands::{
     desktop_app_info, desktop_codex_sidecar_diagnostics, desktop_diagnostics, desktop_git_status,
@@ -7,6 +8,7 @@ pub use commands::{
     DesktopGitCheckpoint, DesktopGitStatusSnapshot, DesktopHealth, DesktopPaths,
     DesktopProjectMetadata, DesktopWorkspaceSummary,
 };
+pub use diagnostics_bundle::{desktop_export_diagnostics_bundle, DiagnosticsBundle};
 
 #[cfg(not(test))]
 pub fn run() {
@@ -20,7 +22,8 @@ pub fn run() {
             commands::desktop_codex_sidecar_diagnostics,
             commands::desktop_validate_project_path,
             commands::desktop_scan_workspace,
-            commands::desktop_git_status
+            commands::desktop_git_status,
+            diagnostics_bundle::desktop_export_diagnostics_bundle
         ])
         .run(tauri::generate_context!())
         .expect("failed to run Tauri app");
@@ -33,6 +36,7 @@ mod tests {
         desktop_git_status, desktop_health, desktop_paths, desktop_scan_workspace,
         desktop_validate_project_path,
     };
+    use crate::desktop_export_diagnostics_bundle;
 
     #[test]
     fn reports_desktop_health() {
@@ -88,5 +92,16 @@ mod tests {
         let status = desktop_git_status(std::env::temp_dir().display().to_string());
 
         assert!(status.is_err());
+    }
+
+    #[test]
+    fn exports_masked_diagnostics_bundle() {
+        let bundle = desktop_export_diagnostics_bundle(true);
+
+        assert!(bundle.privacy_mode);
+        assert!(bundle
+            .masked_logs
+            .iter()
+            .all(|line| !line.contains("sk-demo")));
     }
 }

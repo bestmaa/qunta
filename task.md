@@ -783,7 +783,7 @@ docs                      architecture, security, setup, release notes
 #### T1103 - Add Diagnostics Bundle
 
 - Version: `v0.11.2`
-- Status: `pending`
+- Status: `completed`
 - Goal: Generate support diagnostics without secrets.
 - Persona: Support engineer; make bug reports actionable.
 - Success Criteria: Bundle includes app version, OS, runner version, config summary, recent errors, and masked logs.

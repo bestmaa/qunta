@@ -62,7 +62,7 @@ for (const token of ["Mark Checkpoint", "changedFiles", "branch"]) {
   }
 }
 
-for (const token of ["projectPermissionModes", "Telemetry", "Reset Trusted Commands", "confirmDanger"]) {
+for (const token of ["projectPermissionModes", "Telemetry", "Privacy mode", "Reset Trusted Commands"]) {
   if (!settings.includes(token)) {
     throw new Error(`Settings panel is missing ${token}.`);
   }
