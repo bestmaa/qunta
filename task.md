@@ -798,7 +798,7 @@ docs                      architecture, security, setup, release notes
 #### T1201 - Define Release Channels
 
 - Version: `v0.12.0`
-- Status: `pending`
+- Status: `completed`
 - Goal: Define dev, beta, stable release channels and update policy.
 - Persona: Release manager; make app updates safe.
 - Success Criteria: Docs define versioning, channels, signing, rollback, and release checklist.
