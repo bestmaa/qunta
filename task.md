@@ -476,7 +476,7 @@ docs                      architecture, security, setup, release notes
 #### T0701 - Define Workspace Safety Rules
 
 - Version: `v0.7.0`
-- Status: `pending`
+- Status: `completed`
 - Goal: Define local workspace permissions, allowed paths, denied paths, and git safety.
 - Persona: Security engineer; protect user machine and secrets.
 - Success Criteria: Rules cover project root, ignored files, env files, SSH keys, cloud credentials, destructive commands, and git operations.
