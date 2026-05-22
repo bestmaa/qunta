@@ -275,7 +275,7 @@ docs                      architecture, security, setup, release notes
 #### T0401 - Define Cloud API Contract
 
 - Version: `v0.4.0`
-- Status: `pending`
+- Status: `completed`
 - Goal: Define cloud API endpoints for auth, device sessions, usage, billing, gateway access, and app updates.
 - Persona: API architect; keep desktop and cloud contracts stable.
 - Success Criteria: OpenAPI or typed route spec covers MVP endpoints and error responses.
