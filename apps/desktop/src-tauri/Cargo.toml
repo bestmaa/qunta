@@ -3,6 +3,8 @@ name = "qunta-desktop"
 edition.workspace = true
 license.workspace = true
 version.workspace = true
+authors = ["bestmaa"]
+description = "Native Tauri shell for Qunta."
 
 [build-dependencies]
 tauri-build = { version = "2.5.1", features = [] }

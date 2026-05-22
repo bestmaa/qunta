@@ -12,11 +12,14 @@
   "app": {
     "windows": [
       {
+        "label": "main",
         "title": "Qunta",
         "width": 1240,
         "height": 820,
         "minWidth": 960,
-        "minHeight": 640
+        "minHeight": 640,
+        "resizable": true,
+        "center": true
       }
     ],
     "security": {
@@ -26,6 +29,6 @@
   "bundle": {
     "active": true,
     "targets": "all",
-    "icon": []
+    "icon": ["icons/icon.ico"]
   }
 }

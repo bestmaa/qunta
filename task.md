@@ -234,7 +234,7 @@ docs                      architecture, security, setup, release notes
 #### T0302 - Add Desktop App Configuration
 
 - Version: `v0.3.1`
-- Status: `pending`
+- Status: `completed`
 - Goal: Configure app identifier, windows, permissions, icons placeholder, and build metadata.
 - Persona: Release engineer; make packaging predictable.
 - Success Criteria: Tauri config is minimal, permission-scoped, and documented.

@@ -1,7 +1,7 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
-  "description": "Default desktop permissions for the coding agent shell.",
+  "description": "Default deny-by-default permissions for the Qunta shell.",
   "windows": ["main"],
   "permissions": ["core:default"]
 }
