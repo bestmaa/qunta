@@ -543,7 +543,7 @@ docs                      architecture, security, setup, release notes
 #### T0801 - Define Desktop UI Information Architecture
 
 - Version: `v0.8.0`
-- Status: `pending`
+- Status: `completed`
 - Goal: Define the app layout for chat, file tree, diff viewer, terminal logs, approvals, settings, and account.
 - Persona: Product designer; make workflows clear and dense enough for coding work.
 - Success Criteria: Docs/wireframes define first screen, project screen, session screen, settings, and error states.
