@@ -44,6 +44,15 @@ pub struct DesktopCodexSidecarDiagnostics {
     pub source: Option<&'static str>,
 }
 
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DesktopProjectMetadata {
+    pub id: String,
+    pub name: String,
+    pub path: String,
+    pub is_git_repository: bool,
+}
+
 #[tauri::command]
 pub fn desktop_app_info() -> DesktopAppInfo {
     let info = app_info();
@@ -100,6 +109,32 @@ pub fn desktop_codex_sidecar_diagnostics() -> DesktopCodexSidecarDiagnostics {
             .map(|value| value.path.display().to_string()),
         source: location.map(|value| source_label(&value.source)),
     }
+}
+
+#[tauri::command]
+pub fn desktop_validate_project_path(path: String) -> Result<DesktopProjectMetadata, String> {
+    let canonical = std::path::PathBuf::from(path)
+        .canonicalize()
+        .map_err(|error| format!("Project path is not available: {error}"))?;
+
+    if !canonical.is_dir() {
+        return Err(String::from("Project path must be a folder"));
+    }
+
+    let name = canonical
+        .file_name()
+        .and_then(|value| value.to_str())
+        .filter(|value| !value.trim().is_empty())
+        .unwrap_or("Project")
+        .to_string();
+    let path = canonical.display().to_string();
+
+    Ok(DesktopProjectMetadata {
+        id: path.clone(),
+        name,
+        is_git_repository: canonical.join(".git").is_dir(),
+        path,
+    })
 }
 
 fn app_info() -> AppInfo {

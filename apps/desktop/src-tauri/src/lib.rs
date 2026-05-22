@@ -2,19 +2,21 @@ mod commands;
 
 pub use commands::{
     desktop_app_info, desktop_codex_sidecar_diagnostics, desktop_diagnostics, desktop_health,
-    desktop_paths, DesktopAppInfo, DesktopCodexSidecarDiagnostics, DesktopDiagnostics,
-    DesktopHealth, DesktopPaths,
+    desktop_paths, desktop_validate_project_path, DesktopAppInfo, DesktopCodexSidecarDiagnostics,
+    DesktopDiagnostics, DesktopHealth, DesktopPaths, DesktopProjectMetadata,
 };
 
 #[cfg(not(test))]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_dialog::init())
         .invoke_handler(tauri::generate_handler![
             commands::desktop_app_info,
             commands::desktop_health,
             commands::desktop_paths,
             commands::desktop_diagnostics,
-            commands::desktop_codex_sidecar_diagnostics
+            commands::desktop_codex_sidecar_diagnostics,
+            commands::desktop_validate_project_path
         ])
         .run(tauri::generate_context!())
         .expect("failed to run Tauri app");
@@ -24,7 +26,7 @@ pub fn run() {
 mod tests {
     use super::{
         desktop_app_info, desktop_codex_sidecar_diagnostics, desktop_diagnostics, desktop_health,
-        desktop_paths,
+        desktop_paths, desktop_validate_project_path,
     };
 
     #[test]
@@ -57,5 +59,14 @@ mod tests {
 
         assert!(!diagnostics.message.is_empty());
         assert!(!diagnostics.required_version.is_empty());
+    }
+
+    #[test]
+    fn validates_project_path_metadata() {
+        let metadata = desktop_validate_project_path(std::env::temp_dir().display().to_string())
+            .expect("temp dir is a valid project path");
+
+        assert!(!metadata.name.is_empty());
+        assert!(!metadata.path.is_empty());
     }
 }

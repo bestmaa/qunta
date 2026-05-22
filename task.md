@@ -489,7 +489,7 @@ docs                      architecture, security, setup, release notes
 #### T0702 - Add Project Picker
 
 - Version: `v0.7.1`
-- Status: `pending`
+- Status: `completed`
 - Goal: Let users select and remember local project folders.
 - Persona: Desktop UX engineer; make workspace selection simple.
 - Success Criteria: UI opens folder picker, validates project path, stores recent projects, and shows project metadata.

@@ -33,6 +33,13 @@ export interface DesktopCodexSidecarDiagnostics {
   readonly source: "devOverride" | "bundled" | null;
 }
 
+export interface DesktopProjectMetadata {
+  readonly id: string;
+  readonly name: string;
+  readonly path: string;
+  readonly isGitRepository: boolean;
+}
+
 export function getDesktopAppInfo(): Promise<DesktopAppInfo> {
   return invoke<DesktopAppInfo>("desktop_app_info");
 }
@@ -51,4 +58,8 @@ export function getDesktopDiagnostics(): Promise<DesktopDiagnostics> {
 
 export function getCodexSidecarDiagnostics(): Promise<DesktopCodexSidecarDiagnostics> {
   return invoke<DesktopCodexSidecarDiagnostics>("desktop_codex_sidecar_diagnostics");
+}
+
+export function validateProjectPath(path: string): Promise<DesktopProjectMetadata> {
+  return invoke<DesktopProjectMetadata>("desktop_validate_project_path", { path });
 }

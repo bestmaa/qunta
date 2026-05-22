@@ -3,5 +3,5 @@
   "identifier": "default",
   "description": "Default deny-by-default permissions for the Qunta shell.",
   "windows": ["main"],
-  "permissions": ["core:default"]
+  "permissions": ["core:default", "dialog:allow-open"]
 }

@@ -98,3 +98,35 @@ button {
   color: #89939d;
   font-size: 14px;
 }
+
+.status-stack,
+.project-summary,
+.project-list {
+  display: grid;
+  gap: 10px;
+}
+
+.project-path,
+.project-list-item small {
+  color: #89939d;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.project-list-item {
+  background: #15191d;
+  border: 1px solid #2d3338;
+  border-radius: 6px;
+  color: #f1f4f6;
+  cursor: pointer;
+  display: grid;
+  gap: 4px;
+  padding: 8px;
+  text-align: left;
+}
+
+.error-text {
+  color: #ff8a8a;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
