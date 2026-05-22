@@ -3,14 +3,17 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 
 import { authenticateGatewayRequest } from "./auth.js";
 import type { GatewayConfig } from "./config.js";
+import { RateLimiter } from "./rate-limit.js";
 import { createMockStream } from "./stream.js";
 import { createUsageRepository, type UsageRepository } from "./usage-meter.js";
 
 export interface GatewayServerOptions {
+  readonly rateLimiter?: RateLimiter;
   readonly usageRepository?: UsageRepository;
 }
 
 export function createGatewayServer(config: GatewayConfig, options: GatewayServerOptions = {}) {
+  const rateLimiter = options.rateLimiter ?? new RateLimiter();
   const usageRepository = options.usageRepository ?? createUsageRepository();
 
   return createHttpServer((request, response) => {
@@ -20,7 +23,7 @@ export function createGatewayServer(config: GatewayConfig, options: GatewayServe
     }
 
     if (request.method === "POST" && request.url === "/v1/responses") {
-      void handleResponses(config, usageRepository, request, response);
+      void handleResponses(config, usageRepository, rateLimiter, request, response);
       return;
     }
 
@@ -43,6 +46,7 @@ export function createGatewayServer(config: GatewayConfig, options: GatewayServe
 async function handleResponses(
   config: GatewayConfig,
   usageRepository: UsageRepository,
+  rateLimiter: RateLimiter,
   request: IncomingMessage,
   response: ServerResponse
 ) {
@@ -55,6 +59,17 @@ async function handleResponses(
   const startedAt = Date.now();
   const body = await readJsonBody(request);
   const sessionId = body.agentSessionId;
+  const rateLimit = rateLimiter.checkAndRecord({
+    accountId: auth.accountId,
+    nowMs: startedAt,
+    sessionId
+  });
+
+  if (!rateLimit.ok) {
+    writeJson(response, 429, { error: rateLimit.error, ok: false });
+    return;
+  }
+
   const chunks = createMockStream(config, auth.accountId, sessionId);
 
   response.setHeader("content-type", "application/x-ndjson");

@@ -15,6 +15,7 @@ const deepSeekSource = readFileSync(
 const routingSource = readFileSync(new URL("../src/routing-policy.ts", import.meta.url), "utf8");
 const usageSource = readFileSync(new URL("../src/usage-meter.ts", import.meta.url), "utf8");
 const serverSource = readFileSync(new URL("../src/server.ts", import.meta.url), "utf8");
+const rateLimitSource = readFileSync(new URL("../src/rate-limit.ts", import.meta.url), "utf8");
 
 if (!configSource.includes("QUNTA_GATEWAY_PORT must be a valid TCP port")) {
   throw new Error("gateway config validation is missing");
@@ -64,4 +65,12 @@ for (const token of ["createUsageRepository", "providerRatesPerTokenMicros", "su
 
 if (!serverSource.includes("/v1/usage") || serverSource.includes("desktopUsage")) {
   throw new Error("gateway must expose server-side usage without trusting desktop usage.");
+}
+
+if (!rateLimitSource.includes("checkAndRecord") || !rateLimitSource.includes("rate_limited")) {
+  throw new Error("gateway rate limiter must return typed retryable errors.");
+}
+
+if (!serverSource.includes("RateLimiter") || !serverSource.includes("writeJson(response, 429")) {
+  throw new Error("gateway server must enforce rate limits.");
 }

@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx src/index.ts",
-    "test": "node test/gateway.test.mjs && tsx test/usage-meter.test.ts",
+    "test": "node test/gateway.test.mjs && tsx test/usage-meter.test.ts && tsx test/rate-limit.test.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {

@@ -716,7 +716,7 @@ docs                      architecture, security, setup, release notes
 #### T1002 - Add Rate Limits
 
 - Version: `v0.10.1`
-- Status: `pending`
+- Status: `completed`
 - Goal: Enforce per-account and per-session rate limits.
 - Persona: Reliability engineer; protect provider spend.
 - Success Criteria: API/gateway enforce limits and return typed retryable errors.
