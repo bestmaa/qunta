@@ -2,8 +2,9 @@ mod commands;
 
 pub use commands::{
     desktop_app_info, desktop_codex_sidecar_diagnostics, desktop_diagnostics, desktop_health,
-    desktop_paths, desktop_validate_project_path, DesktopAppInfo, DesktopCodexSidecarDiagnostics,
-    DesktopDiagnostics, DesktopHealth, DesktopPaths, DesktopProjectMetadata,
+    desktop_paths, desktop_scan_workspace, desktop_validate_project_path, DesktopAppInfo,
+    DesktopCodexSidecarDiagnostics, DesktopDiagnostics, DesktopHealth, DesktopPaths,
+    DesktopProjectMetadata, DesktopWorkspaceSummary,
 };
 
 #[cfg(not(test))]
@@ -16,7 +17,8 @@ pub fn run() {
             commands::desktop_paths,
             commands::desktop_diagnostics,
             commands::desktop_codex_sidecar_diagnostics,
-            commands::desktop_validate_project_path
+            commands::desktop_validate_project_path,
+            commands::desktop_scan_workspace
         ])
         .run(tauri::generate_context!())
         .expect("failed to run Tauri app");
@@ -26,7 +28,7 @@ pub fn run() {
 mod tests {
     use super::{
         desktop_app_info, desktop_codex_sidecar_diagnostics, desktop_diagnostics, desktop_health,
-        desktop_paths, desktop_validate_project_path,
+        desktop_paths, desktop_scan_workspace, desktop_validate_project_path,
     };
 
     #[test]
@@ -68,5 +70,13 @@ mod tests {
 
         assert!(!metadata.name.is_empty());
         assert!(!metadata.path.is_empty());
+    }
+
+    #[test]
+    fn scans_workspace_summary() {
+        let summary = desktop_scan_workspace(std::env::temp_dir().display().to_string())
+            .expect("temp dir can be scanned");
+
+        assert!(!summary.name.is_empty());
     }
 }

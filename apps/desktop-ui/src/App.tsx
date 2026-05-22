@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 
 import {
   type DesktopProjectMetadata,
+  type DesktopWorkspaceSummary,
+  scanWorkspace,
   validateProjectPath
 } from "./desktop-commands.js";
 
@@ -11,6 +13,7 @@ const recentProjectsKey = "qunta.recentProjects";
 
 export function App() {
   const [activeProject, setActiveProject] = useState<DesktopProjectMetadata | null>(null);
+  const [workspaceSummary, setWorkspaceSummary] = useState<DesktopWorkspaceSummary | null>(null);
   const [recentProjects, setRecentProjects] = useState<readonly DesktopProjectMetadata[]>([]);
   const [pickerError, setPickerError] = useState<string | null>(null);
   const [isPicking, setIsPicking] = useState(false);
@@ -31,7 +34,7 @@ export function App() {
 
       const metadata = await validateProjectPath(selected);
       const nextProjects = rememberProject(metadata, recentProjects);
-      setActiveProject(metadata);
+      await activateProject(metadata);
       setRecentProjects(nextProjects);
       localStorage.setItem(recentProjectsKey, JSON.stringify(nextProjects));
     } catch (error) {
@@ -39,6 +42,11 @@ export function App() {
     } finally {
       setIsPicking(false);
     }
+  }
+
+  async function activateProject(project: DesktopProjectMetadata) {
+    setActiveProject(project);
+    setWorkspaceSummary(await scanWorkspace(project.path));
   }
 
   return (
@@ -54,6 +62,14 @@ export function App() {
               <StatusBadge tone={activeProject.isGitRepository ? "success" : "neutral"}>
                 {activeProject.isGitRepository ? "Git workspace" : "Folder workspace"}
               </StatusBadge>
+              {workspaceSummary ? (
+                <div className="summary-grid">
+                  <SummaryRow label="Languages" values={workspaceSummary.languages} />
+                  <SummaryRow label="Managers" values={workspaceSummary.packageManagers} />
+                  <SummaryRow label="Tests" values={workspaceSummary.testCommands} />
+                  <SummaryRow label="Git" values={[workspaceSummary.gitState]} />
+                </div>
+              ) : null}
             </div>
           ) : (
             <div className="empty-state">Select a project to start a coding session.</div>
@@ -86,7 +102,9 @@ export function App() {
                 <button
                   className="project-list-item"
                   key={project.id}
-                  onClick={() => setActiveProject(project)}
+                  onClick={() => {
+                    void activateProject(project);
+                  }}
                   type="button"
                 >
                   <span>{project.name}</span>
@@ -115,4 +133,19 @@ function readRecentProjects(): readonly DesktopProjectMetadata[] {
   } catch {
     return [];
   }
+}
+
+function SummaryRow({
+  label,
+  values
+}: {
+  readonly label: string;
+  readonly values: readonly string[];
+}) {
+  return (
+    <div className="summary-row">
+      <span>{label}</span>
+      <strong>{values.length > 0 ? values.join(", ") : "None detected"}</strong>
+    </div>
+  );
 }

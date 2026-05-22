@@ -125,6 +125,29 @@ button {
   text-align: left;
 }
 
+.summary-grid {
+  border-top: 1px solid #2d3338;
+  display: grid;
+  gap: 8px;
+  padding-top: 10px;
+}
+
+.summary-row {
+  display: grid;
+  gap: 3px;
+}
+
+.summary-row span {
+  color: #89939d;
+  font-size: 12px;
+}
+
+.summary-row strong {
+  font-size: 13px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
 .error-text {
   color: #ff8a8a;
   font-size: 13px;

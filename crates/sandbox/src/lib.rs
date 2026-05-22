@@ -1,3 +1,5 @@
+pub mod scanner;
+
 use std::path::{Path, PathBuf};
 
 use desktop_core::{DesktopError, DesktopResult};

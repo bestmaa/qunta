@@ -13,6 +13,7 @@ tauri-build = { version = "2.5.1", features = [] }
 agent-runner = { path = "../../../crates/agent-runner" }
 desktop-core = { path = "../../../crates/desktop-core" }
 serde = { version = "1.0.228", features = ["derive"] }
+sandbox = { path = "../../../crates/sandbox" }
 tauri = { version = "2.9.5", features = [] }
 tauri-plugin-dialog = "2.7.1"
 

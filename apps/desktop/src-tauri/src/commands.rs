@@ -2,6 +2,7 @@ use agent_runner::sidecar::{
     default_bundled_candidate, diagnose_sidecar, read_codex_version, SidecarConfig, SidecarSource,
 };
 use desktop_core::AppInfo;
+use sandbox::scanner::{scan_workspace, GitState};
 use serde::Serialize;
 
 #[derive(Debug, Serialize)]
@@ -51,6 +52,18 @@ pub struct DesktopProjectMetadata {
     pub name: String,
     pub path: String,
     pub is_git_repository: bool,
+}
+
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct DesktopWorkspaceSummary {
+    pub root: String,
+    pub name: String,
+    pub languages: Vec<String>,
+    pub package_managers: Vec<String>,
+    pub test_commands: Vec<String>,
+    pub git_state: &'static str,
+    pub ignored_entries: Vec<String>,
 }
 
 #[tauri::command]
@@ -137,8 +150,32 @@ pub fn desktop_validate_project_path(path: String) -> Result<DesktopProjectMetad
     })
 }
 
+#[tauri::command]
+pub fn desktop_scan_workspace(path: String) -> Result<DesktopWorkspaceSummary, String> {
+    let summary = scan_workspace(path).map_err(|error| error.to_string())?;
+
+    Ok(DesktopWorkspaceSummary {
+        root: summary.root.display().to_string(),
+        name: summary.name,
+        languages: summary.languages,
+        package_managers: summary.package_managers,
+        test_commands: summary.test_commands,
+        git_state: git_state_label(&summary.git_state),
+        ignored_entries: summary.ignored_entries,
+    })
+}
+
 fn app_info() -> AppInfo {
     AppInfo::new("Qunta", env!("CARGO_PKG_VERSION"))
+}
+
+fn git_state_label(value: &GitState) -> &'static str {
+    match value {
+        GitState::Clean => "clean",
+        GitState::Dirty => "dirty",
+        GitState::NotRepository => "notRepository",
+        GitState::Unknown => "unknown",
+    }
 }
 
 fn source_label(source: &SidecarSource) -> &'static str {

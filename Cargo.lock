@@ -2360,6 +2360,7 @@ version = "0.1.0"
 dependencies = [
  "agent-runner",
  "desktop-core",
+ "sandbox",
  "serde",
  "tauri",
  "tauri-build",

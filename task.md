@@ -502,7 +502,7 @@ docs                      architecture, security, setup, release notes
 #### T0703 - Add Workspace Scanner
 
 - Version: `v0.7.2`
-- Status: `pending`
+- Status: `completed`
 - Goal: Scan selected project for language, package manager, git status, and test commands.
 - Persona: Developer experience engineer; help the agent start with context.
 - Success Criteria: Scanner returns typed project summary and ignores sensitive/large folders.
