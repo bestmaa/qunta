@@ -608,7 +608,7 @@ docs                      architecture, security, setup, release notes
 #### T0806 - Add Diff Viewer
 
 - Version: `v0.8.5`
-- Status: `pending`
+- Status: `completed`
 - Goal: Add a diff viewer for proposed file changes.
 - Persona: Code review UX engineer; make patch review clear.
 - Success Criteria: Viewer supports added/modified/deleted files, inline diff, accept/reject file, and copy path.

@@ -6,6 +6,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const source = readFileSync(join(here, "../src/PromptComposer.tsx"), "utf8");
 const timeline = readFileSync(join(here, "../src/AgentTimeline.tsx"), "utf8");
 const fileTree = readFileSync(join(here, "../src/FileTree.tsx"), "utf8");
+const diffViewer = readFileSync(join(here, "../src/DiffViewer.tsx"), "utf8");
 
 if (!source.includes("canSubmitPrompt")) {
   throw new Error("Prompt composer must export validation logic.");
@@ -25,4 +26,10 @@ if (!timeline.includes("maskSecretText") || !timeline.includes("Bearer ***")) {
 
 if (!fileTree.includes("deniedPatterns") || !fileTree.includes("filterVisibleEntries")) {
   throw new Error("File tree must filter denied paths.");
+}
+
+for (const token of ["truncateDiff", "Copy Path", "Accept", "Reject"]) {
+  if (!diffViewer.includes(token)) {
+    throw new Error(`Diff viewer is missing ${token}.`);
+  }
 }

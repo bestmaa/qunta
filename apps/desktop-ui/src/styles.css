@@ -270,6 +270,65 @@ button {
   white-space: pre-wrap;
 }
 
+.diff-viewer {
+  border: 1px solid #2d3338;
+  border-radius: 6px;
+  display: grid;
+  gap: 8px;
+  padding: 8px;
+}
+
+.diff-file-list,
+.diff-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.diff-file-tab {
+  align-items: center;
+  background: #15191d;
+  border: 1px solid #2d3338;
+  border-radius: 6px;
+  color: #f1f4f6;
+  cursor: pointer;
+  display: inline-flex;
+  gap: 8px;
+  max-width: 100%;
+  padding: 6px 8px;
+}
+
+.diff-file-tab span {
+  overflow-wrap: anywhere;
+}
+
+.diff-lines {
+  background: #15191d;
+  border: 1px solid #2d3338;
+  border-radius: 6px;
+  display: grid;
+  font-size: 12px;
+  margin: 0;
+  max-height: 240px;
+  overflow: auto;
+  padding: 8px;
+}
+
+.diff-line {
+  color: #c4ccd4;
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  min-height: 18px;
+  white-space: pre-wrap;
+}
+
+.diff-line-added {
+  color: #7bd99f;
+}
+
+.diff-line-deleted {
+  color: #ff8a8a;
+}
+
 .error-strip,
 .status-bar {
   border-top: 1px solid #2d3338;
