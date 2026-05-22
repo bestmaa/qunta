@@ -5,6 +5,7 @@ pub enum DesktopErrorKind {
     InvalidConfig,
     PermissionDenied,
     ProcessFailed,
+    StorageFailed,
     WorkspaceDenied,
 }
 
@@ -36,8 +37,21 @@ impl DesktopError {
         }
     }
 
+    pub fn storage_failed(message: impl Into<String>) -> Self {
+        Self {
+            kind: DesktopErrorKind::StorageFailed,
+            message: message.into(),
+        }
+    }
+
     pub fn kind(&self) -> &DesktopErrorKind {
         &self.kind
+    }
+}
+
+impl From<rusqlite::Error> for DesktopError {
+    fn from(error: rusqlite::Error) -> Self {
+        Self::storage_failed(error.to_string())
     }
 }
 

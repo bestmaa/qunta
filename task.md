@@ -260,7 +260,7 @@ docs                      architecture, security, setup, release notes
 #### T0304 - Add Local SQLite State
 
 - Version: `v0.3.3`
-- Status: `pending`
+- Status: `completed`
 - Goal: Add local state storage for settings, recent projects, sessions, and audit cache.
 - Persona: Local data engineer; keep app useful offline without storing provider secrets.
 - Success Criteria: SQLite migrations, repository layer, typed state models, and tests exist.

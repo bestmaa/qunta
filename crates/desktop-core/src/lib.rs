@@ -1,4 +1,5 @@
 mod error;
+pub mod local_state;
 
 pub use error::{DesktopError, DesktopErrorKind, DesktopResult};
 
