@@ -837,7 +837,7 @@ docs                      architecture, security, setup, release notes
 #### T1204 - Add End-To-End MVP Smoke
 
 - Version: `v0.12.3`
-- Status: `pending`
+- Status: `completed`
 - Goal: Add an end-to-end smoke test covering login, project selection, prompt, runner event stream, patch preview, approval, and verification command.
 - Persona: QA engineer; prove the MVP loop works.
 - Success Criteria: Smoke test runs against mocked cloud/gateway and fixture workspace.
