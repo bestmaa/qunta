@@ -1,5 +1,6 @@
 import { open } from "@tauri-apps/plugin-dialog";
 import { Button, Panel, StatusBadge, WorkspaceLayout } from "@qunta/ui";
+import { canTransition } from "@qunta/shared-types";
 import { useEffect, useState } from "react";
 
 import {
@@ -69,7 +70,7 @@ export function App() {
               <h1>{activeProject ? activeProject.name : "No project selected"}</h1>
               <p>{activeProject?.path ?? "Open a local folder to prepare a coding session."}</p>
             </div>
-            <Button disabled={!activeProject} tone="primary">
+            <Button disabled={!activeProject || !canTransition("idle", "start")} tone="primary">
               New Session
             </Button>
           </header>

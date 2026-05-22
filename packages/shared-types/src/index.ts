@@ -6,4 +6,5 @@ export type * from "./gateway.type.js";
 export type * from "./model.type.js";
 export type * from "./project.type.js";
 export type * from "./session.type.js";
+export * from "./session-state.js";
 export type * from "./usage.type.js";

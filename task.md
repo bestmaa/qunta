@@ -636,7 +636,7 @@ docs                      architecture, security, setup, release notes
 #### T0901 - Add Session State Machine
 
 - Version: `v0.9.0`
-- Status: `pending`
+- Status: `completed`
 - Goal: Add a typed session state machine for idle, starting, running, waiting approval, applying patch, completed, failed, and cancelled.
 - Persona: State management engineer; prevent UI/runtime drift.
 - Success Criteria: State transitions are typed, tested, and used by UI controls.
