@@ -621,7 +621,7 @@ docs                      architecture, security, setup, release notes
 #### T0807 - Add Terminal Log Panel
 
 - Version: `v0.8.6`
-- Status: `pending`
+- Status: `completed`
 - Goal: Show command output in a terminal-like panel.
 - Persona: Developer tools engineer; make logs readable without freezing UI.
 - Success Criteria: Panel supports streaming, ANSI formatting, search, pause, clear, and command grouping.

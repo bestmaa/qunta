@@ -7,6 +7,7 @@ const source = readFileSync(join(here, "../src/PromptComposer.tsx"), "utf8");
 const timeline = readFileSync(join(here, "../src/AgentTimeline.tsx"), "utf8");
 const fileTree = readFileSync(join(here, "../src/FileTree.tsx"), "utf8");
 const diffViewer = readFileSync(join(here, "../src/DiffViewer.tsx"), "utf8");
+const terminal = readFileSync(join(here, "../src/TerminalLogPanel.tsx"), "utf8");
 
 if (!source.includes("canSubmitPrompt")) {
   throw new Error("Prompt composer must export validation logic.");
@@ -31,5 +32,11 @@ if (!fileTree.includes("deniedPatterns") || !fileTree.includes("filterVisibleEnt
 for (const token of ["truncateDiff", "Copy Path", "Accept", "Reject"]) {
   if (!diffViewer.includes(token)) {
     throw new Error(`Diff viewer is missing ${token}.`);
+  }
+}
+
+for (const token of ["maskTerminalLine", "Pause", "Clear", "Search logs"]) {
+  if (!terminal.includes(token)) {
+    throw new Error(`Terminal panel is missing ${token}.`);
   }
 }

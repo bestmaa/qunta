@@ -392,6 +392,58 @@ button {
   padding-top: 8px;
 }
 
+.terminal-panel,
+.terminal-output,
+.terminal-group {
+  display: grid;
+  gap: 8px;
+}
+
+.terminal-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.terminal-controls input {
+  background: #15191d;
+  border: 1px solid #2d3338;
+  border-radius: 6px;
+  color: #f1f4f6;
+  flex: 1;
+  min-width: 120px;
+  padding: 6px 8px;
+}
+
+.terminal-output {
+  max-height: 240px;
+  overflow: auto;
+}
+
+.terminal-group {
+  background: #15191d;
+  border: 1px solid #2d3338;
+  border-radius: 6px;
+  padding: 8px;
+}
+
+.terminal-group header {
+  display: grid;
+  gap: 3px;
+}
+
+.terminal-group header span,
+.terminal-group code {
+  color: #89939d;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.terminal-group code {
+  color: #c4ccd4;
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+}
+
 .composer {
   border-top: 1px solid #2d3338;
   display: grid;

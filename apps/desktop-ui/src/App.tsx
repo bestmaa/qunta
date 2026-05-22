@@ -11,8 +11,9 @@ import {
 import { AgentTimeline } from "./AgentTimeline.js";
 import { DiffViewer } from "./DiffViewer.js";
 import { FileTree } from "./FileTree.js";
-import { mockDiffs, mockEvents, mockFiles } from "./mock-data.js";
+import { mockDiffs, mockEvents, mockFiles, mockTerminalGroups } from "./mock-data.js";
 import { PromptComposer } from "./PromptComposer.js";
+import { TerminalLogPanel } from "./TerminalLogPanel.js";
 
 const recentProjectsKey = "qunta.recentProjects";
 
@@ -160,6 +161,9 @@ export function App() {
               </div>
               <div className="approval-audit">{approvalAudit}</div>
             </div>
+          </Panel>
+          <Panel heading="Terminal">
+            <TerminalLogPanel groups={mockTerminalGroups} />
           </Panel>
         </div>
       }

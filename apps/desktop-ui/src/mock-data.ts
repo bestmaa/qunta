@@ -1,6 +1,7 @@
 import type { AgentTimelineEvent } from "./AgentTimeline.js";
 import type { DiffFile } from "./DiffViewer.js";
 import type { FileTreeEntry } from "./FileTree.js";
+import type { TerminalCommandGroup } from "./TerminalLogPanel.js";
 
 export const mockEvents: readonly AgentTimelineEvent[] = [
   { id: "evt-1", title: "Prepared project context", type: "thinking" },
@@ -37,5 +38,13 @@ export const mockDiffs: readonly DiffFile[] = [
     path: "old-agent-notes.md",
     status: "deleted",
     hunks: ["-temporary notes", "-remove before beta"]
+  }
+];
+
+export const mockTerminalGroups: readonly TerminalCommandGroup[] = [
+  {
+    command: "pnpm test",
+    cwd: "/workspace/qunta",
+    lines: ["$ pnpm test", "packages/ui ok", "token=hidden-value", "desktop-ui ok"]
   }
 ];
