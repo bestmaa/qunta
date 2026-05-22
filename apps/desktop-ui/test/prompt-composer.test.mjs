@@ -13,6 +13,7 @@ const verification = readFileSync(join(here, "../src/VerificationCommands.tsx"),
 const gitCheckpoint = readFileSync(join(here, "../src/GitCheckpointView.tsx"), "utf8");
 const settings = readFileSync(join(here, "../src/SettingsPanel.tsx"), "utf8");
 const runnerConfig = readFileSync(join(here, "../src/runner-config.ts"), "utf8");
+const updateCheck = readFileSync(join(here, "../src/update-check.ts"), "utf8");
 
 if (!source.includes("canSubmitPrompt")) {
   throw new Error("Prompt composer must export validation logic.");
@@ -76,4 +77,8 @@ for (const token of ["buildRunnerConfig", "approvalMode", "projectId"]) {
 
 if (/openai|deepseek|provider/i.test(settings)) {
   throw new Error("Settings panel must not expose provider internals.");
+}
+
+if (!settings.includes("Check Update") || !updateCheck.includes("Unsigned update rejected")) {
+  throw new Error("Settings must display signed update checks without auto-install.");
 }

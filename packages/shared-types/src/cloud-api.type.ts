@@ -86,7 +86,10 @@ export interface UpdateLatestRequest {
 export interface UpdateLatestResponse {
   readonly artifactUrl: string;
   readonly channel: ReleaseChannel;
+  readonly checksumSha256: string;
+  readonly minimumSupportedVersion: string;
   readonly notesUrl: string;
   readonly signature: string;
+  readonly signed: true;
   readonly version: string;
 }

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 import { exportDiagnosticsBundle, type DesktopProjectMetadata } from "./desktop-commands.js";
 import { approvalModeLabel, type ApprovalMode } from "./runner-config.js";
+import { summarizeUpdateMetadata } from "./update-check.js";
 
 type UpdateChannel = "beta" | "stable";
 
@@ -52,6 +53,7 @@ export function SettingsPanel({
   const [confirmRunningMode, setConfirmRunningMode] = useState(false);
   const [privacyMode, setPrivacyMode] = useState(true);
   const [diagnosticState, setDiagnosticState] = useState("Diagnostics ready");
+  const [updateState, setUpdateState] = useState("Updates not checked");
 
   useEffect(() => {
     const nextSettings = readLocalSettings();
@@ -144,6 +146,27 @@ export function SettingsPanel({
           <option value="stable">Stable</option>
           <option value="beta">Beta</option>
         </select>
+      </section>
+      <section className="settings-row">
+        <Button
+          onClick={() => {
+            const summary = summarizeUpdateMetadata({
+              artifactUrl: "https://updates.qunta.dev/stable/windows/Qunta-0.1.0",
+              channel: settings.updateChannel,
+              checksumSha256: "0".repeat(64),
+              minimumSupportedVersion: "0.1.0",
+              notesUrl: "https://updates.qunta.dev/stable/notes/0.1.0",
+              signature: "signed-update-metadata-placeholder",
+              signed: true,
+              version: "0.1.0"
+            });
+            setUpdateState(summary.message);
+          }}
+          size="sm"
+        >
+          Check Update
+        </Button>
+        <span>{updateState}</span>
       </section>
       <section className="settings-row">
         <Button

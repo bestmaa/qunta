@@ -824,7 +824,7 @@ docs                      architecture, security, setup, release notes
 #### T1203 - Add Auto Update Contract
 
 - Version: `v0.12.2`
-- Status: `pending`
+- Status: `completed`
 - Goal: Define and implement signed update metadata flow.
 - Persona: Desktop security engineer; keep updates trustworthy.
 - Success Criteria: App can check update metadata and display available update without auto-install in MVP.

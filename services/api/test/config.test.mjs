@@ -5,6 +5,7 @@ const configSource = readFileSync(new URL("../src/config.ts", import.meta.url), 
 const serverSource = readFileSync(new URL("../src/server.ts", import.meta.url), "utf8");
 const rateLimitSource = readFileSync(new URL("../src/rate-limit.ts", import.meta.url), "utf8");
 const webhookSource = readFileSync(new URL("../src/billing-webhooks.ts", import.meta.url), "utf8");
+const updateSource = readFileSync(new URL("../src/update-routes.ts", import.meta.url), "utf8");
 
 if (!configSource.includes("QUNTA_API_PORT must be a valid TCP port")) {
   throw new Error("config validation message is missing");
@@ -36,6 +37,16 @@ for (const token of ["x-qunta-signature", "timingSafeEqual", "auditEvents"]) {
 
 if (!serverSource.includes("handleBillingWebhook")) {
   throw new Error("billing webhook route is not registered.");
+}
+
+for (const token of ["/v1/updates/latest", "signature", "checksumSha256"]) {
+  if (!updateSource.includes(token)) {
+    throw new Error(`update metadata route is missing ${token}.`);
+  }
+}
+
+if (!serverSource.includes("handleUpdateRoute")) {
+  throw new Error("update route is not registered.");
 }
 
 execFileSync("node", ["--version"], { stdio: "ignore" });

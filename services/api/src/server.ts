@@ -8,6 +8,7 @@ import type { ApiConfig } from "./config.js";
 import { createHealthResponse } from "./health.js";
 import { writeJson } from "./http-json.js";
 import { ApiRateLimiter } from "./rate-limit.js";
+import { handleUpdateRoute } from "./update-routes.js";
 
 export function createServer(config: ApiConfig) {
   const authStore = new AuthStore();
@@ -41,6 +42,12 @@ export function createServer(config: ApiConfig) {
     const accountResult = handleAccountRoute(request);
     if (accountResult) {
       writeJson(response, accountResult);
+      return;
+    }
+
+    const updateResult = handleUpdateRoute(request);
+    if (updateResult) {
+      writeJson(response, updateResult);
       return;
     }
 
