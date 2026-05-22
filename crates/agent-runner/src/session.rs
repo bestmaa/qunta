@@ -1,6 +1,7 @@
 use std::path::{Path, PathBuf};
 
 use desktop_core::{DesktopError, DesktopResult};
+use sandbox::{command_approval::CommandApprovalRequest, permission_profile::RiskLevel};
 
 use crate::{
     codex_config::{
@@ -24,6 +25,12 @@ pub enum SessionEvent {
     Started,
     AgentStdout(String),
     AgentStderr(String),
+    CommandApprovalRequested {
+        command: String,
+        cwd: String,
+        reason: String,
+        risk: RiskLevel,
+    },
     Completed,
 }
 
@@ -63,6 +70,15 @@ pub fn run_controlled_mock_session(input: &MockSessionInput) -> DesktopResult<Se
         events,
         changed_files: vec![input.workspace_path.join("qunta-agent-output.txt")],
     })
+}
+
+pub fn command_approval_event(request: &CommandApprovalRequest) -> SessionEvent {
+    SessionEvent::CommandApprovalRequested {
+        command: request.command.clone(),
+        cwd: request.cwd.display().to_string(),
+        reason: request.reason.clone(),
+        risk: request.risk,
+    }
 }
 
 fn validate_temp_workspace(path: &Path) -> DesktopResult<()> {
@@ -125,7 +141,14 @@ fn mock_agent_spec(workspace_path: &Path) -> ProcessSpec {
 
 #[cfg(test)]
 mod tests {
-    use super::{run_controlled_mock_session, MockSessionInput, SessionEvent};
+    use sandbox::{
+        command_approval::ApprovalQueue,
+        permission_profile::{PermissionProfile, RiskLevel},
+    };
+
+    use super::{
+        command_approval_event, run_controlled_mock_session, MockSessionInput, SessionEvent,
+    };
 
     #[test]
     fn runs_mock_session_and_writes_harmless_change() {
@@ -169,5 +192,27 @@ mod tests {
         };
 
         assert!(run_controlled_mock_session(&input).is_err());
+    }
+
+    #[test]
+    fn maps_command_approval_to_session_event() {
+        let mut queue = ApprovalQueue::default();
+        let request = queue.request(
+            PermissionProfile::Suggest,
+            "pnpm test",
+            "/tmp/project",
+            "verify project",
+        );
+        let event = command_approval_event(&request);
+
+        assert_eq!(
+            event,
+            SessionEvent::CommandApprovalRequested {
+                command: String::from("pnpm test"),
+                cwd: String::from("/tmp/project"),
+                reason: String::from("verify project"),
+                risk: RiskLevel::Low,
+            }
+        );
     }
 }

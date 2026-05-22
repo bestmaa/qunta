@@ -11,12 +11,16 @@ import {
 
 const recentProjectsKey = "qunta.recentProjects";
 
+type ApprovalState = "approved" | "pending" | "rejected";
+
 export function App() {
   const [activeProject, setActiveProject] = useState<DesktopProjectMetadata | null>(null);
   const [workspaceSummary, setWorkspaceSummary] = useState<DesktopWorkspaceSummary | null>(null);
   const [recentProjects, setRecentProjects] = useState<readonly DesktopProjectMetadata[]>([]);
   const [pickerError, setPickerError] = useState<string | null>(null);
   const [isPicking, setIsPicking] = useState(false);
+  const [approvalState, setApprovalState] = useState<ApprovalState>("pending");
+  const [approvalAudit, setApprovalAudit] = useState("Waiting for user decision");
 
   useEffect(() => {
     setRecentProjects(readRecentProjects());
@@ -77,12 +81,56 @@ export function App() {
         </Panel>
       }
       details={
-        <Panel heading="Status">
-          <div className="status-stack">
-            <StatusBadge tone="success">Shell ready</StatusBadge>
-            {activeProject ? <span>{activeProject.name}</span> : <span>No project selected</span>}
-          </div>
-        </Panel>
+        <div className="details-stack">
+          <Panel heading="Status">
+            <div className="status-stack">
+              <StatusBadge tone="success">Shell ready</StatusBadge>
+              {activeProject ? <span>{activeProject.name}</span> : <span>No project selected</span>}
+            </div>
+          </Panel>
+          <Panel
+            actions={
+              <StatusBadge tone={approvalState === "approved" ? "success" : "warning"}>
+                {approvalState}
+              </StatusBadge>
+            }
+            heading="Approvals"
+          >
+            <div className="approval-card">
+              <div className="approval-command">pnpm test</div>
+              <div className="approval-meta">
+                <span>{activeProject?.path ?? "No project selected"}</span>
+                <span>Medium risk</span>
+                <span>Verify project after changes</span>
+              </div>
+              <div className="approval-actions">
+                <Button
+                  disabled={!activeProject || approvalState !== "pending"}
+                  onClick={() => {
+                    setApprovalState("approved");
+                    setApprovalAudit("Command approved by user decision");
+                  }}
+                  size="sm"
+                  tone="primary"
+                >
+                  Approve
+                </Button>
+                <Button
+                  disabled={approvalState !== "pending"}
+                  onClick={() => {
+                    setApprovalState("rejected");
+                    setApprovalAudit("Command rejected and will not run");
+                  }}
+                  size="sm"
+                  tone="danger"
+                >
+                  Reject
+                </Button>
+              </div>
+              <div className="approval-audit">{approvalAudit}</div>
+            </div>
+          </Panel>
+        </div>
       }
       sidebar={
         <Panel

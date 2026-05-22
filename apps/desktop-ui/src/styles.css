@@ -101,7 +101,8 @@ button {
 
 .status-stack,
 .project-summary,
-.project-list {
+.project-list,
+.details-stack {
   display: grid;
   gap: 10px;
 }
@@ -152,4 +153,38 @@ button {
   color: #ff8a8a;
   font-size: 13px;
   overflow-wrap: anywhere;
+}
+
+.approval-card {
+  display: grid;
+  gap: 10px;
+}
+
+.approval-command {
+  background: #15191d;
+  border: 1px solid #2d3338;
+  border-radius: 6px;
+  font-family: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font-size: 13px;
+  padding: 8px;
+}
+
+.approval-meta {
+  color: #89939d;
+  display: grid;
+  font-size: 12px;
+  gap: 4px;
+  overflow-wrap: anywhere;
+}
+
+.approval-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.approval-audit {
+  border-top: 1px solid #2d3338;
+  color: #c4ccd4;
+  font-size: 12px;
+  padding-top: 8px;
 }

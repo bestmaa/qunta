@@ -1,3 +1,4 @@
+pub mod command_approval;
 pub mod permission_profile;
 pub mod scanner;
 

@@ -528,7 +528,7 @@ docs                      architecture, security, setup, release notes
 #### T0705 - Add Command Approval System
 
 - Version: `v0.7.4`
-- Status: `pending`
+- Status: `completed`
 - Goal: Intercept requested shell commands and ask for user approval when required.
 - Persona: Agent safety engineer; prevent surprise command execution.
 - Success Criteria: UI shows command, cwd, risk label, reason, approve/reject controls, and audit entry.
