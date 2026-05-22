@@ -247,7 +247,7 @@ docs                      architecture, security, setup, release notes
 #### T0303 - Add Rust IPC Commands
 
 - Version: `v0.3.2`
-- Status: `pending`
+- Status: `completed`
 - Goal: Add typed Tauri commands for app info, health, local paths, and diagnostics.
 - Persona: Native bridge engineer; make UI-to-Rust communication safe.
 - Success Criteria: UI can invoke typed commands and render returned diagnostics.
