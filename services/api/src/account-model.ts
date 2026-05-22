@@ -25,6 +25,26 @@ export const freePlan: SubscriptionPlan = {
   name: "Free"
 };
 
+export const proPlan: SubscriptionPlan = {
+  features: [...freeFeatures, "controlled_full_mode"],
+  id: "pro",
+  limits: {
+    monthlyTokens: 2_000_000,
+    sessionsPerMonth: 500
+  },
+  name: "Pro"
+};
+
+export const teamPlan: SubscriptionPlan = {
+  features: proPlan.features,
+  id: "team",
+  limits: {
+    monthlyTokens: 10_000_000,
+    sessionsPerMonth: 2_500
+  },
+  name: "Team"
+};
+
 export function createDefaultEntitlement(accountId: AccountId): AccountEntitlement {
   return {
     accountId,

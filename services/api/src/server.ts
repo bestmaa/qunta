@@ -3,6 +3,7 @@ import { createServer as createHttpServer } from "node:http";
 import { handleAccountRoute } from "./account-routes.js";
 import { AuthStore } from "./auth-store.js";
 import { handleAuthRoute } from "./auth-routes.js";
+import { BillingWebhookStore, handleBillingWebhook } from "./billing-webhooks.js";
 import type { ApiConfig } from "./config.js";
 import { createHealthResponse } from "./health.js";
 import { writeJson } from "./http-json.js";
@@ -10,9 +11,20 @@ import { ApiRateLimiter } from "./rate-limit.js";
 
 export function createServer(config: ApiConfig) {
   const authStore = new AuthStore();
+  const billingWebhookStore = new BillingWebhookStore();
   const rateLimiter = new ApiRateLimiter();
 
   return createHttpServer(async (request, response) => {
+    const webhookResult = await handleBillingWebhook(
+      billingWebhookStore,
+      config.billingWebhookSecret,
+      request
+    );
+    if (webhookResult) {
+      writeJson(response, webhookResult);
+      return;
+    }
+
     const accountId = getAccountId(request);
     const rateLimit = rateLimiter.check(accountId);
     if (!rateLimit.ok) {

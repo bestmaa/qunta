@@ -742,7 +742,7 @@ docs                      architecture, security, setup, release notes
 #### T1004 - Add Billing Webhooks
 
 - Version: `v0.10.3`
-- Status: `pending`
+- Status: `completed`
 - Goal: Implement billing webhook handling for subscription status changes.
 - Persona: Payments engineer; keep entitlements synced.
 - Success Criteria: Webhooks verify signature, update account plan, and record audit events.
