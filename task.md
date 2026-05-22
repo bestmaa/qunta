@@ -329,7 +329,7 @@ docs                      architecture, security, setup, release notes
 #### T0501 - Define LLM Gateway Contract
 
 - Version: `v0.5.0`
-- Status: `pending`
+- Status: `completed`
 - Goal: Define a provider-hidden gateway contract compatible with Codex needs.
 - Persona: AI platform architect; hide provider complexity behind one contract.
 - Success Criteria: Contract defines auth, request, streaming, tool-call passthrough, errors, retries, usage, and audit IDs.
