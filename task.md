@@ -595,7 +595,7 @@ docs                      architecture, security, setup, release notes
 #### T0805 - Add File Tree Viewer
 
 - Version: `v0.8.4`
-- Status: `pending`
+- Status: `completed`
 - Goal: Add project file tree with search, ignored folder handling, and changed-file indicators.
 - Persona: Frontend workspace engineer; help users inspect project context.
 - Success Criteria: File tree renders scanned workspace summary and changed file states.

@@ -5,6 +5,7 @@ import { dirname, join } from "node:path";
 const here = dirname(fileURLToPath(import.meta.url));
 const source = readFileSync(join(here, "../src/PromptComposer.tsx"), "utf8");
 const timeline = readFileSync(join(here, "../src/AgentTimeline.tsx"), "utf8");
+const fileTree = readFileSync(join(here, "../src/FileTree.tsx"), "utf8");
 
 if (!source.includes("canSubmitPrompt")) {
   throw new Error("Prompt composer must export validation logic.");
@@ -20,4 +21,8 @@ if (/openai|deepseek|provider|model/i.test(source)) {
 
 if (!timeline.includes("maskSecretText") || !timeline.includes("Bearer ***")) {
   throw new Error("Timeline must mask secret-like event payloads.");
+}
+
+if (!fileTree.includes("deniedPatterns") || !fileTree.includes("filterVisibleEntries")) {
+  throw new Error("File tree must filter denied paths.");
 }

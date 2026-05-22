@@ -154,6 +154,42 @@ button {
   text-align: left;
 }
 
+.file-tree {
+  border-top: 1px solid #2d3338;
+  display: grid;
+  gap: 8px;
+  padding-top: 10px;
+}
+
+.file-tree-search {
+  background: #15191d;
+  border: 1px solid #2d3338;
+  border-radius: 6px;
+  color: #f1f4f6;
+  font: inherit;
+  padding: 7px 8px;
+}
+
+.file-tree-list {
+  display: grid;
+  gap: 6px;
+  max-height: 220px;
+  overflow: auto;
+}
+
+.file-tree-row {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.file-tree-row span {
+  color: #c4ccd4;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
 .summary-grid {
   border-top: 1px solid #2d3338;
   display: grid;
