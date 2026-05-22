@@ -368,7 +368,7 @@ docs                      architecture, security, setup, release notes
 #### T0504 - Add OpenAI Provider Adapter
 
 - Version: `v0.5.3`
-- Status: `pending`
+- Status: `completed`
 - Goal: Add server-side OpenAI adapter for the LLM gateway.
 - Persona: Provider engineer; keep OpenAI details isolated.
 - Success Criteria: Adapter streams responses, maps errors, records usage, and reads keys only from server env/secret store.
