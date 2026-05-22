@@ -1,3 +1,4 @@
+import type { AccountEntitlement } from "./account.type.js";
 import type { AccountId, AuthSession, DeviceId, SessionId } from "./auth.type.js";
 import type { ModelCapability, ModelIntent } from "./model.type.js";
 import type { UsageSummary } from "./usage.type.js";
@@ -48,6 +49,7 @@ export interface AccountPlan {
 export interface AccountResponse {
   readonly accountId: AccountId;
   readonly deviceId: DeviceId;
+  readonly entitlement: AccountEntitlement;
   readonly plan: AccountPlan;
   readonly session: AuthSession;
 }

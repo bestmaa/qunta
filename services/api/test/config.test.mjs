@@ -17,4 +17,9 @@ if (!authRoutes.includes("/v1/auth/device/start")) {
   throw new Error("auth start route is missing");
 }
 
+const accountRoutes = readFileSync(new URL("../src/account-routes.ts", import.meta.url), "utf8");
+if (!accountRoutes.includes("/v1/account/usage")) {
+  throw new Error("account usage route is missing");
+}
+
 execFileSync("node", ["--version"], { stdio: "ignore" });

@@ -1,5 +1,6 @@
 import { createServer as createHttpServer } from "node:http";
 
+import { handleAccountRoute } from "./account-routes.js";
 import { AuthStore } from "./auth-store.js";
 import { handleAuthRoute } from "./auth-routes.js";
 import type { ApiConfig } from "./config.js";
@@ -13,6 +14,12 @@ export function createServer(config: ApiConfig) {
     const authResult = await handleAuthRoute(authStore, request);
     if (authResult) {
       writeJson(response, authResult);
+      return;
+    }
+
+    const accountResult = handleAccountRoute(request);
+    if (accountResult) {
+      writeJson(response, accountResult);
       return;
     }
 

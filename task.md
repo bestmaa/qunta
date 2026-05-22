@@ -314,7 +314,7 @@ docs                      architecture, security, setup, release notes
 #### T0404 - Add Account And Plan Model
 
 - Version: `v0.4.3`
-- Status: `pending`
+- Status: `completed`
 - Goal: Add account, subscription plan, feature flag, and usage limit models.
 - Persona: SaaS backend engineer; prepare product monetization.
 - Success Criteria: User plan can limit sessions, monthly usage, and premium features.
