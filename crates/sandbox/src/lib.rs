@@ -1,3 +1,4 @@
+pub mod permission_profile;
 pub mod scanner;
 
 use std::path::{Path, PathBuf};

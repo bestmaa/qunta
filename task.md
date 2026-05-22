@@ -515,7 +515,7 @@ docs                      architecture, security, setup, release notes
 #### T0704 - Add Permission Profile Engine
 
 - Version: `v0.7.3`
-- Status: `pending`
+- Status: `completed`
 - Goal: Add permission profiles for suggest, auto-edit, and full-auto-like controlled modes.
 - Persona: Safety engineer; make automation levels explicit.
 - Success Criteria: Profiles define read, write, shell, network, install, git, and approval requirements.
