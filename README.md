@@ -114,3 +114,8 @@ corepack pnpm release:beta:check
 ## Direction
 
 Qunta is being built as a sellable multi-product foundation for controlled local coding assistance. Near-term work is focused on native packaging, signed releases, real beta sessions, gateway operations, and tightening the approval and recovery experience.
+
+
+## Contributing and security
+
+Genuine contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request, use the repository issue forms for reproducible bugs and focused feature proposals, and report vulnerabilities privately according to [SECURITY.md](SECURITY.md).
